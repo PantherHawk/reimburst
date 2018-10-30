@@ -12,7 +12,7 @@
     <title>Manager Home</title>
 </head>
 <style>
-     li {
+    li {
         display: table;
         margin: 0px auto 0px auto;
     }
@@ -22,24 +22,25 @@
         border: 
     }
 </style>
+
 <body class="container">
     <ul class="nav nav-pills">
-            <li class="nav-item">
-                <a class="nav-link active" href="#" onclick="hideSide()">Employees</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Logout</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-        </ul>
-    <!-- sidebar to display employees -->
+        <li class="nav-item">
+            <a class="nav-link active" href="#" onclick="hideSide()">Employees</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Logout</a>
+        </li>
 
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+    </ul>
+    <!-- sidebar to display employees -->
+    <div style="display: flex;">
     <div class="wrapper">
 
         <!-- Sidebar to fill with Employees -->
@@ -51,37 +52,67 @@
         </script>
         <nav id="sidebar" style="margin-top: 40px;">
             <div id="sidebar" class="col-12 col-md-2 col-xl-2 bd-sidebar">
-    
-                    <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Cras justo odio
-                                <span class="badge badge-primary badge-pill">14</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Dapibus ac facilisis in
-                                <span class="badge badge-primary badge-pill">2</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Morbi leo risus
-                                <span class="badge badge-primary badge-pill">1</span>
-                            </li>
-                        </ul>
+
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Cras justo odio
+                        <span class="badge badge-primary badge-pill">14</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Dapibus ac facilisis in
+                        <span class="badge badge-primary badge-pill">2</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Morbi leo risus
+                        <span class="badge badge-primary badge-pill">1</span>
+                    </li>
+                </ul>
 
                 </span>
                 <button class="btn btn-link bd-search-docs-toggle d-md-none p-0 ml-3" type="button" data-toggle="collapse"
                     aria-expanded="false"></button>
             </div>
         </nav>
+    </div>
 
         <!-- Page Content -->
         <div id="content">
             <!-- We'll fill this with dummy content -->
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">List group item heading</h5>
+                        <small>3 days ago</small>
+                    </div>
+                    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus
+                        varius blandit.</p>
+                    <small>Donec id elit non mi porta.</small>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">List group item heading</h5>
+                        <small class="text-muted">3 days ago</small>
+                    </div>
+                    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus
+                        varius blandit.</p>
+                    <small class="text-muted">Donec id elit non mi porta.</small>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">List group item heading</h5>
+                        <small class="text-muted">3 days ago</small>
+                    </div>
+                    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus
+                        varius blandit.</p>
+                    <small class="text-muted">Donec id elit non mi porta.</small>
+                </a>
+            </div>
         </div>
-
     </div>
 
 
-    
+
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
