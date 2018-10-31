@@ -34,8 +34,8 @@
                     aria-controls="pills-expenses" aria-selected="true">Expenses</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="pills-add-tab" data-toggle="pill" href="#pills-add" role="tab"
-                    aria-controls="pills-add" aria-selected="false">+</a>
+                <a class="nav-link" id="pills-add-tab" data-toggle="pill" href="#pills-add" role="tab" aria-controls="pills-add"
+                    aria-selected="false">+</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
@@ -55,14 +55,15 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
-                
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link show-all" href="#" style="cursor: pointer;"><button class="show-all" onclick="showAll()">All</button></a>
+                            <a class="nav-link show-all" href="#" style="cursor: pointer;"><button class="show-all"
+                                    onclick="showAll()">All</button></a>
                         </li>
                         <!--TODO: onclick, filter only the pending expenses -->
                         <li class="nav-item">
@@ -71,7 +72,8 @@
                         <!--TODO: onclick, filter only the approved expenses -->
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link show-approved" href="#" style="cursor: pointer;"><button class="show-approved" onclick="showApproved()">Approved</button></a>
+                            <a class="nav-link show-approved" href="#" style="cursor: pointer;"><button class="show-approved"
+                                    onclick="showApproved()">Approved</button></a>
                         </li>
                         <!--TODO: onclick, filter only the rejected expenses -->
                         <li class="nav-item">
@@ -79,7 +81,7 @@
                         </li>
                     </ul>
                     <!-- Search for specific cards -->
-                    
+
                 </div>
             </nav>
             <!-- put expense list here -->
@@ -115,25 +117,55 @@
             </div>
         </div>
         <div class="tab-pane fade" id="pills-add" role="tabpanel" aria-labelledby="pills-add-tab">
-            <form action="">
-                <h4>Make a new Expense Request</h4>
-                <label for="amount"></label>
-                <input type="text" placeholder="$20">
-                <label for=""></label>
-                <input type="text">
-                <button></button>
+            <form id="new-expense">
+                <div class="form-row">
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control new-expense-title" placeholder="What did you buy?">
+                    </div>
+                    <hr>
+                    <div class="col-auto">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">$</div>
+                            </div>
+                            <input type="text" class="form-control how-much" required pattern="[0-9]+(\.[0-9]{0,2})">
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                    </div>
+                </div>
             </form>
+            <br>
+            <style>
+                .not-yet-submitted {
+                    display: none;
+                }
+
+                .submitted {
+                    -webkit-animation: bounceInUp 3s;
+                    animation: bounceInUp 3s;
+                }
+                @-webkit-keyframes bounceInUp{0%{opacity:0;-webkit-transform:translateY(2000px)}60%{opacity:1;-webkit-transform:translateY(-30px)}80%{-webkit-transform:translateY(10px)}100%{-webkit-transform:translateY(0px)}}@-moz-keyframes bounceInUp{0%{opacity:0;-moz-transform:translateY(2000px)}60%{opacity:1;-moz-transform:translateY(-30px)}80%{-moz-transform:translateY(10px)}100%{-moz-transform:translateY(0px)}}@keyframes bounceInUp{0%{opacity:0;transform:translateY(2000px)}60%{opacity:1;transform:translateY(-30px)}80%{transform:translateY(10px)}100%{transform:translateY(0px)}}
+            </style>
+            <div class="alert alert-success submitted not-yet-submitted" role="alert">
+                <h4 class="alert-heading">Well done!</h4>
+                <p>Aww yeah, you successfully read this important alert message. This example text is going to run a
+                    bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+                <hr>
+                <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+            </div>
         </div>
         <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
     </div>
 
     <script>
-        $(function(){
-  $('body').on('click', '.list-group-item', function(){
-    $('.list-group-item').removeClass('active');
-    $(this).closest('.list-group-item').addClass('active');
-  });
-});
+        $(function () {
+            $('body').on('click', '.list-group-item', function () {
+                $('.list-group-item').removeClass('active');
+                $(this).closest('.list-group-item').addClass('active');
+            });
+        });
     </script>
     <script src="../../util/API.js"></script>
     <script src="ExpensesRepository.js"></script>
