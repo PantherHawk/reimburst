@@ -55,10 +55,20 @@ window.onload = function () {
             function showPending() {
                 console.log('clicked pending!')
                 const expenses = document.querySelectorAll(".expense");
-                console.log('expenses in showPending: ------ ', expenses)
                 expenses.forEach(expense => {
                     console.log('running in foreach')
                     if (!expense.classList.contains("Pending")) {
+                        expense.setAttribute("style", "display: none;");
+                    }
+                });
+            }
+
+            function showApproved() {
+                console.log('clicked pending!')
+                const expenses = document.querySelectorAll(".expense");
+                expenses.forEach(expense => {
+                    console.log('running in foreach')
+                    if (!expense.classList.contains("Approved")) {
                         expense.setAttribute("style", "display: none;");
                     }
                 });
