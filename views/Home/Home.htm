@@ -59,21 +59,23 @@
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
                 
-
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link show-all" href="#" style="cursor: pointer;"><button class="show-all" onclick="showAll()">All</button></a>
+                        </li>
                         <!--TODO: onclick, filter only the pending expenses -->
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Pending</a>
+                            <a class="nav-link" href="#" style="cursor: pointer;"><button class="show-pending" onclick="showPending()">Pending</button></a>
                         </li>
                         <!--TODO: onclick, filter only the approved expenses -->
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Approved</a>
+                            <a class="nav-link show-approved" href="#" style="cursor: pointer;">Approved</a>
                         </li>
                         <!--TODO: onclick, filter only the rejected expenses -->
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Rejected</a>
+                            <a class="nav-link show-rejected" href="#">Rejected</a>
                         </li>
                     </ul>
                     <!-- Search for specific cards -->
@@ -82,7 +84,7 @@
             </nav>
             <!-- put expense list here -->
 
-            <div class="list-group">
+            <div class="list-group expenses">
                 <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">List group item heading</h5>
@@ -133,6 +135,9 @@
   });
 });
     </script>
+    <script src="../../util/API.js"></script>
+    <script src="ExpensesRepository.js"></script>
+    <script src="Home.js"></script>
 
 </body>
 
