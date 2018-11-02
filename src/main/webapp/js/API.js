@@ -38,7 +38,7 @@ const API = {
     },
     post(_endpoint, body) {
         _endpoint = _endpoint ? _endpoint : ''; /** for testing */
-        return fetch(this.url + endpoint, {
+        return fetch(this.url.dev/* + _endpoint*/, {
             method: 'POST',
             headers: { 'Contnet-type': 'application/json' },
             body: body

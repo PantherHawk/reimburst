@@ -8,8 +8,8 @@
   	<servlet-name>FrontController</servlet-name>
   	<servlet-class>controller.FrontController</servlet-class>
   </servlet>
-  <servlet-mapper>
+  <servlet-mapping>
   	<servlet-name>FrontController</servlet-name>
   	<url-pattern>/api</url-pattern>
-  </servlet-mapper>
+  </servlet-mapping>
 </web-app>
