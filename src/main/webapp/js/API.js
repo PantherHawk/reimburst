@@ -17,7 +17,7 @@ const API = {
 
     _handleContentType(_response) {
         const contentType = _response.headers.get('content-type');
-
+        console.log("Server response: " + _response)
         if (contentType && contentType.includes('application/json')) {
             return _response.json();
         }
@@ -38,10 +38,11 @@ const API = {
     },
     post(_endpoint, body) {
         _endpoint = _endpoint ? _endpoint : ''; /** for testing */
-        return fetch(this.url.dev/* + _endpoint*/, {
+        console.log("endpoint passed in as   ", _endpoint)
+        return fetch(this.url.dev + _endpoint, {
             method: 'POST',
             headers: { 'Contnet-type': 'application/json' },
-            body: body
+            body: JSON.stringify(body)
             })
             .then(this._handleError)
             .then(this._handleContentType)

@@ -14,6 +14,6 @@ function loginSubmit(event) {
 	
 	console.log(`Employee [  ${user}   ${pass}  ]`);
 	
-	EmployeeRepository.loginEmployee({ user, pass })
+	EmployeeRepository.loginEmployee({ "username": user, "password": pass })
 	.then(data => console.log(data));
 }

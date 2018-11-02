@@ -12,9 +12,12 @@ public class RequestHelper {
 	private LoginDelegate ld = new LoginDelegate();
 	
 	public void process(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		System.out.println("In request helper ------>" + req.getMethod());
 		String switchString = req.getRequestURI().substring(req.getContextPath().length()+1);
+		System.out.println("switch string:     " + switchString);
 		while(switchString.indexOf("/") > 0) {
-			switchString = switchString.substring(0, switchString.indexOf("/"));
+			switchString = switchString.substring(switchString.indexOf("/")+1);
+			System.out.println("switch string:    " + switchString);
 		}
 //		post login for manager's info for dashboard, first fify expenses: .../api/manager/  
 //		get the expenses for a specific user: .../api/manager/employee/id?q=10

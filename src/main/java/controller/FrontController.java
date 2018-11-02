@@ -39,6 +39,7 @@ public class FrontController extends HttpServlet {
 			RequestDispatcher view = req.getRequestDispatcher("html/splash.htm");
 			view.forward(req, res);
 		} else {
+			System.out.println("Going to request helper");
 			rh.process(req, res);
 		}
 	}
