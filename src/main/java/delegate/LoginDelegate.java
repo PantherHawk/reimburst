@@ -33,6 +33,11 @@ public class LoginDelegate {
 				System.out.println("login success! redirecting to home page.");
 				HttpSession session = req.getSession();
 				session.setAttribute("user", login);
+				System.out.println("session:   " + session);
+				if (login.getHasManager() > 0) {
+//					send them to employee page
+					res.sendRedirect("employee");
+				}
 				res.sendRedirect("home");
 			}
 			
@@ -57,7 +62,9 @@ public class LoginDelegate {
 		HttpSession session = req.getSession();
 		if(session.getAttribute("user")==null) {
 			System.out.println("Sending client to Login page.");
-			req.getRequestDispatcher("html/Login.html").forward(req,resp);
+//			req.getRequestDispatcher("html/Login.html").forward(req,resp);
+			resp.setStatus(300);
+			resp.sendRedirect("/EmployeeReimbursement/html/Login.html");
 		} else {
 			resp.sendRedirect("home");
 		}

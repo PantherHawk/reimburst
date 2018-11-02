@@ -6,10 +6,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import delegate.ExpensesDelegate;
 import delegate.LoginDelegate;
 
 public class RequestHelper {
 	private LoginDelegate ld = new LoginDelegate();
+	private ExpensesDelegate exd = new ExpensesDelegate();
 	
 	public void process(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("In request helper ------>" + req.getMethod());
@@ -25,12 +27,17 @@ public class RequestHelper {
 		
 //		get the employee's info for home, first fifty expenses: .../api/employee/
 		switch(switchString) {
+		case "expenses": if ("GET".equals(req.getMethod())) {
+			exd.getExpenses(req, res);
+		}
 		case "employee": /*TODO: serve the Employee assets*/; break;
 		case "manager": /*TODO: serve the Manager assets*/; break;
 		case "login": if ("POST".equals(req.getMethod())) {
 			ld.login(req, res);
 			/*TODO: handle login*/
 		} else {
+			System.out.println("Sending to login delegate for redirect.");
+			ld.getPage(req, res);
 			/*TODO: serve the login page*/
 		} break;
 		case "logout": /*TODO: logout client*/; break;

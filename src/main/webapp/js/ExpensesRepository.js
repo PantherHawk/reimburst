@@ -19,7 +19,7 @@ const ExpensesRepository = {
     },
     // add uri later
     getForUser(user) {
-        return API.get(`/api/expenses/user?id=${user.id}`);
+        return API.get(`/api/expenses/`);
     },
     // add uri later
     getAll() {

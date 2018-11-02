@@ -17,16 +17,20 @@ const API = {
 
     _handleContentType(_response) {
         const contentType = _response.headers.get('content-type');
-        console.log("Server response: " + _response)
+        const redirected = _response.redirected;
+        console.log('content type:    ', contentType)
+        console.log("response text: " + _response.text())
         if (contentType && contentType.includes('application/json')) {
             return _response.json();
+        } else if (redirected) {
+        	return _response;
         }
         return Promise.reject('Oops! Aint no JSON!')
     },
 
     get(_endpoint) {
         _endpoint = _endpoint ? _endpoint : ''; /** for testing */
-        return fetch(this.url + _endpoint, {
+        return fetch(this.url.dev + _endpoint, {
             method: 'GET',
             headers: new Headers({
                 'Accept': 'application/json'
