@@ -30,7 +30,9 @@ public class RequestHelper {
 		case "expenses": if ("GET".equals(req.getMethod())) {
 			exd.getExpenses(req, res);
 		}
-		case "employee": /*TODO: serve the Employee assets*/; break;
+		case "employee": if ("GET".equals(req.getMethod())) {
+//			
+		}; break;
 		case "manager": /*TODO: serve the Manager assets*/; break;
 		case "login": if ("POST".equals(req.getMethod())) {
 			ld.login(req, res);
