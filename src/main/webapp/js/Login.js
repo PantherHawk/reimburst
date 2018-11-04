@@ -15,5 +15,11 @@ function loginSubmit(event) {
 	console.log(`Employee [  ${user}   ${pass}  ]`);
 	
 	EmployeeRepository.loginEmployee({ "username": user, "password": pass })
-	.then(data => console.log(data));
+	.then(user => {
+		console.log("user response: ", user)
+		if (user.id > 0) {
+//			redirect;
+			window.location.replace("Home.html");
+		}
+	});
 }

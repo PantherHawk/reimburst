@@ -1,8 +1,10 @@
 package delegate;
 
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,13 +15,17 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Employee;
+import beans.Expense;
 import data.EmployeeService;
+import data.ExpenseService;
 
 public class LoginDelegate {
 	
-	public void login(HttpServletRequest req, HttpServletResponse res) throws IOException {
+	public void login(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+String page = "";
 		
 		Employee authEmployee = null;
+		
 		try {
 			authEmployee = new ObjectMapper().readValue(req.getReader(	), Employee.class);
 			System.out.println("employee object: " + authEmployee);
@@ -31,31 +37,44 @@ public class LoginDelegate {
 				res.sendRedirect("login");
 			} else {
 				System.out.println("login success! redirecting to home page.");
+//				Make a new session
 				HttpSession session = req.getSession();
+//				Throw the user object into the session
 				session.setAttribute("user", login);
 				System.out.println("session:   " + session);
+//				If she's not a manager
 				if (login.getHasManager() > 0) {
-//					send them to employee page
-					res.sendRedirect("employee");
-				}
-				res.sendRedirect("home");
+//					Fetch all their expenses
+					List<Expense> allTheirExpenses = new ArrayList<Expense>();
+					allTheirExpenses = ExpenseService.
+										getInstance().
+										getEmployeeSpecificExpenses(login.getId());
+//					Send them the employee homepage
+						ObjectMapper mapper = new ObjectMapper();
+						res.setHeader("Content-Type", "application/json");
+						mapper.writeValue(res.getOutputStream(), login);
+//						RequestDispatcher dispatch = req.getRequestDispatcher("/html/Home.html");
+//						dispatch.include(req, res);
+
+//						mapper.writeValue(res.getOutputStream(), allTheirExpenses);
+
+				} else {
+					
+					if (login.getHasManager() == 0) {
+//					TODO: Get all the expenses for all the employees
+					}
+			   }
+
 			}
-			
 		} catch(JsonParseException | JsonMappingException e) {
 			e.printStackTrace();
-			res.sendError(400, "You did not send JSON formatted payload.");
+			RequestDispatcher dispatch = req.getRequestDispatcher("/html/Error.html");
+			dispatch.include(req, res);
 		} catch(IOException e) {
-			res.sendError(500, "Something broke on our end, sorry!");
-		} 
-		
-//		Employee login = EmployeeService.getInstance().login(new Employee(username, password));
-//		if(login == null) {
-//			resp.sendRedirect("login");
-//		} else {
-//			HttpSession session = req.getSession();
-//			session.setAttribute("user", login);
-//			resp.sendRedirect("home");
-//		}
+			e.printStackTrace();
+			RequestDispatcher dispatch = req.getRequestDispatcher("/html/ServerError.html");
+			dispatch.include(req, res);
+		}
 	}
 	
 	public void getPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
