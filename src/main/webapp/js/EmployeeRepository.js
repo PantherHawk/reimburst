@@ -27,7 +27,12 @@ const EmployeeRepository = {
 			});
 		},
 		loginEmployee({username, password}) {
-			return API.post(`/login`, { username, password });
+			return API.post(`/login`, { username, password })
+//			.then(data => data.json())
+			.then(employees => {
+				console.log("employee object finally returned to loginEmployee:  ", employees);
+				return employees;
+			});
 		}
 
 }

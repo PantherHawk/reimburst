@@ -16,11 +16,13 @@ function loginSubmit(event) {
 	
 	EmployeeRepository.loginEmployee({ "username": user, "password": pass })
 	.then(user => {
-		console.log("user response: ", JSON.parse(user))
+//		console.log("user response: ", JSON.parse(user))
 		if (user.id > 0 && user.hasManager < 1) {
 //			redirect;
+			console.log("manager log in success, redirecting to manager page...")
 			window.location.replace("Manager.html");
 		} else if (user.id > 0) {
+			console.log("employee log in success, redirecting to employee page")
 			window.location.replace("Home.html")
 		}
 	});

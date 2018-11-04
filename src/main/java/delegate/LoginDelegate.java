@@ -44,6 +44,7 @@ String page = "";
 				System.out.println("session:   " + session);
 //				If she's not a manager
 				if (login.getHasManager() > 0) {
+					System.out.println("Loggin in an employee...");
 //					Fetch all their expenses
 					List<Expense> allTheirExpenses = new ArrayList<Expense>();
 					allTheirExpenses = ExpenseService.
@@ -60,7 +61,8 @@ String page = "";
 
 				} else {
 					
-					if (login.getHasManager() == 0) {
+					if (login.getHasManager() < 1) {
+						System.out.println("logging in a manager...");
 //					TODO: Get all the expenses for all the employees
 						ObjectMapper mapper = new ObjectMapper();
 						res.setHeader("Content-Type", "application/json");
