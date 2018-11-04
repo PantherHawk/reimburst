@@ -16,10 +16,12 @@ function loginSubmit(event) {
 	
 	EmployeeRepository.loginEmployee({ "username": user, "password": pass })
 	.then(user => {
-		console.log("user response: ", user)
-		if (user.id > 0) {
+		console.log("user response: ", JSON.parse(user))
+		if (user.id > 0 && user.hasManager < 1) {
 //			redirect;
-			window.location.replace("Home.html");
+			window.location.replace("Manager.html");
+		} else if (user.id > 0) {
+			window.location.replace("Home.html")
 		}
 	});
 }

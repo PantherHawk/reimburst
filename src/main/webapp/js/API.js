@@ -33,6 +33,7 @@ const API = {
     },
 
     get(_endpoint) {
+    	console.log('_endpoint--------->' + _endpoint)
     	console.log('WT ACTUAL FUCK!')
         _endpoint = _endpoint ? _endpoint : ''; /** for testing */
         return fetch(this.url.dev + _endpoint, {

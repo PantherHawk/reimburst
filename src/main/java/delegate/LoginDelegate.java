@@ -62,6 +62,9 @@ String page = "";
 					
 					if (login.getHasManager() == 0) {
 //					TODO: Get all the expenses for all the employees
+						ObjectMapper mapper = new ObjectMapper();
+						res.setHeader("Content-Type", "application/json");
+						mapper.writeValue(res.getOutputStream(), login);
 					}
 			   }
 
@@ -85,7 +88,12 @@ String page = "";
 			resp.setStatus(300);
 			resp.sendRedirect("/EmployeeReimbursement/html/Login.html");
 		} else {
-			resp.sendRedirect("home");
+			Employee employee = (Employee) session.getAttribute("user");
+			if (employee.getHasManager() < 1) {
+				resp.sendRedirect("/EmployeeReimbursement/html/Manager.html");
+			} else {
+				resp.sendRedirect("/EmployeeReimbursement/html/Home.html");
+			}
 		}
 	}
 	
