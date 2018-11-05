@@ -13,6 +13,20 @@ const API = {
 
     _handleError(_response) {
     	console.log("handling any errors from the response...")
+    	const status = {
+    		"404": "Login.html",
+    		"500": "ServerError.html",
+    	}
+    	console.log("response status----------->   " + _response.status)
+    	if (_response.status == "404") {
+    		console.log("got a 404, redirecting to login.")
+    		window.location.replace(status[_response.status]);
+    		return;
+    	} else if (_response.status == "500") {
+    		console.log("got a 500, redirecting to Error page.")
+    		window.location.replace(status[_response.status]);
+    		return;
+    	}
         return _response.ok ? _response : Promise.reject(_response.statusText);
     },
 
