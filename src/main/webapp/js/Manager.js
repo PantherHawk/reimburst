@@ -46,6 +46,7 @@ window.onload = function() {
         .then(exps => {
           console.log("exps   " + exps)
           if (Array.isArray(exps)) {
+            exps.sort((a, b) => a.daysSinceRequest - b.daysSinceRequest)
             for (let exp of exps) {
               console.log('expense    ' + exp)
               const li = document.createElement("a");
