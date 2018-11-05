@@ -41,14 +41,14 @@ public class RequestHelper {
 		}; break;
 		case "manager": /*TODO: serve the Manager assets*/; break;
 		case "login": if ("POST".equals(req.getMethod())) {
-			ld.login(req, res);
+			ld.login(req, res); break;
 			/*TODO: handle login*/
 		} else {
 			System.out.println("Sending to login delegate for redirect.");
 			ld.getPage(req, res);
 			/*TODO: serve the login page*/
 		} break;
-		case "logout": /*TODO: logout client*/; break;
+		case "logout": ld.logout(req, res); break;
 		default: break;
 		}
 	}

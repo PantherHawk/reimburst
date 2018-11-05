@@ -1,6 +1,7 @@
 package delegate;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,9 +100,14 @@ String page = "";
 		}
 	}
 	
-	public void logout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	public void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getSession().invalidate();
-		resp.sendRedirect("login");
+//		resp.sendRedirect("/");
+		resp.setContentType("application/json");
+		PrintWriter out = resp.getWriter();
+		String json = "{\"loggedIn\": \"false\", \"location\": \"\"\"}";
+		out.println(json);
+		out.flush();
 	}
 
 

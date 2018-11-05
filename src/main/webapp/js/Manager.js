@@ -139,5 +139,14 @@ function handleApproval() {
   .then(now => {
 	  const newStatus = document.querySelector(`#id-status-${clicked_id}`);
 	  newStatus.innerText = decision;
-  });
+  });  
+}
+
+function logout() {
+	console.log("clicked logout ");
+	
+	EmployeeRepository.logout()
+	.then(data => {
+		window.location.replace("/");
+	})
 }

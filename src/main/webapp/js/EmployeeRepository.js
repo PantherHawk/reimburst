@@ -40,6 +40,13 @@ const EmployeeRepository = {
 				console.log("employee object finally returned to loginEmployee:  ", employee);
 				return employee;
 			});
+		},
+		logout() {
+			return API.get(`/logout`)
+			.then(logoutSuccess => {
+				console.log("logged out!   ", logoutSuccess.status);
+				return logoutSuccess;
+			})
 		}
 
 }
