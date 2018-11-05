@@ -1,19 +1,8 @@
 const empDic = {};
+let expenses = [];
 
 window.onload = function() {
-
-  document.addEventListener('onclick', function (event) {
-
-    // If the clicked element doesn't have the right selector, bail
-    if (!event.target.matches('.click-me')) return;
-  
-    // Don't follow the link
-    event.preventDefault();
-  
-    // Log the clicked element in the console
-    console.log(event.target);
-  
-  }, false);
+  NodeList.prototype.forEach = Array.prototype.forEach;
     console.log("manager page loaded.")
     // grab the container in which to render the list of employees for the team
     const employeesContainer = document.querySelector("#employee-list");
@@ -31,6 +20,9 @@ window.onload = function() {
               empEl.setAttribute("class", "list-group-item d-flex justify-content-between align-items-center click-me");
               badge.setAttribute("class", "badge badge-primary badge-pill")
               
+              // set up click to render matching expenses
+              // empEl.addEventListener("onclick", employeeSelect);
+              empEl.addEventListener("click", employeeSelect, false)
               // fill element with the employee data using HTML5 data attribute
               for (let key in employee) {
                 empEl.setAttribute(`data-${key}`, ""+employee[key]);
@@ -40,7 +32,7 @@ window.onload = function() {
               empDic[employee.id] = fullName;
               empEl.appendChild(document.createTextNode(fullName));
               // render the employee
-              employeesContainer.appendChild(empEl).addEventListener("onclick", clickActivate.bind(this));
+              employeesContainer.appendChild(empEl);
             }
           }
         });
@@ -65,7 +57,8 @@ window.onload = function() {
               const employee = document.createElement("h6");
               const moreInfo = document.createElement("small");
 
-              li.setAttribute("class", "list-group-item list-group-item-action flex-column align-items-start");
+              li.setAttribute("class", "list-group-item list-group-item-action flex-column align-items-start expense");
+              li.setAttribute("id", `expense-${exp.id}`)
               card.setAttribute("class", "d-flex w-100 justify-content-between");
               heading.setAttribute("class", "mb-1");
               info.setAttribute("clas", "mb-1");
@@ -93,4 +86,25 @@ function clickActivate(e) {
   const prevClicked = document.querySelector(".active");
   prevClicked.removeAttribute("class", "active");
   this.setAttribute("class", "active");
+}
+
+function employeeSelect() {
+  const clicked_id = event.target.dataset.id;
+  console.log("employee id clicked:   ", clicked_id);
+  const expenses = document.querySelectorAll(".expense");
+  expenses.forEach(exp => {
+    const emp_id = exp.getAttribute("data-employee_id");
+    if (emp_id !== clicked_id) {
+      exp.setAttribute("style", "display: none;")
+    } else {
+      exp.setAttribute("style", "display: block;")
+    }
+  });
+}
+
+function viewAll() {
+	const expenses = document.querySelectorAll(".expense");
+	  expenses.forEach(exp => {
+		  exp.setAttribute("style", "display: block;")
+	  });
 }
