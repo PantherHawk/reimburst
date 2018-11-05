@@ -102,12 +102,12 @@ String page = "";
 	
 	public void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getSession().invalidate();
-//		resp.sendRedirect("/");
-		resp.setContentType("application/json");
-		PrintWriter out = resp.getWriter();
-		String json = "{\"loggedIn\": \"false\", \"location\": \"\"\"}";
-		out.println(json);
-		out.flush();
+		resp.sendRedirect("/");
+//		resp.setContentType("application/json");
+//		PrintWriter out = resp.getWriter();
+//		String json = "{\"loggedIn\": \"false\", \"location\": \"\"\"}";
+//		out.println(json);
+//		out.flush();
 	}
 
 
