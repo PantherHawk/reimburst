@@ -57,6 +57,14 @@ window.onload = function() {
               const info = document.createElement("p");
               const employee = document.createElement("h6");
               const moreInfo = document.createElement("small");
+              const approve = document.createElement("button");
+              const reject = document.createElement("button")
+              approve.setAttribute("class", "btn btn-outline-success btn-sm");
+              reject.setAttribute("class", "btn btn-outline-danger btn-sm");
+              approve.innerText="Approve";
+              reject.innerText = "Reject";
+              approve.addEventListener("click", handleApproval);
+              reject.addEventListener("click", handleApproval);
 
               li.setAttribute("class", "list-group-item list-group-item-action flex-column align-items-start expense");
               li.setAttribute("id", `expense-${exp.id}`)
@@ -66,6 +74,8 @@ window.onload = function() {
 //            put data in the card for internal use
               for (let key in exp) {
                 li.setAttribute(`data-${key}`, ""+exp[key]);
+                approve.setAttribute(`data-${key}`, ""+exp[key]);
+                reject.setAttribute(`data-${key}`, ""+exp[key]);
               }
 
               heading.innerText = exp.title;
@@ -74,7 +84,7 @@ window.onload = function() {
               date.innerText = `${exp.daysSinceRequest} day${exp.daysSinceRequest > 1 ? 's' : ''} ago`;
               moreInfo.innerText = `${exp.status}`;
               card.append(heading, date, employee);
-              li.append(card, info, moreInfo);
+              li.append(approve, reject, card, info, moreInfo);
               expensesContainer.appendChild(li);
             }
           }
@@ -108,4 +118,20 @@ function viewAll() {
 	  expenses.forEach(exp => {
 		  exp.setAttribute("style", "display: block;")
 	  });
+}
+
+function handleApproval() {
+  console.log("clicked   " + event.target.innerText);
+  // grab the expense id 
+  const clicked_id = event.target.dataset.id;
+  // grab the manager data off the session ... somehow ...
+  // grab the button label
+  const decision = event.target.innerText;
+  const body = {"id": ''};
+  ExpensesRepository.approveExpense(decision, clicked_id)
+  .then(data => {
+    console.log("result of approval procedure    " + data);
+    // update current card's status
+    event.target.dataset.status = decision;
+  });
 }

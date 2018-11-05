@@ -3,7 +3,7 @@
 const ExpensesRepository = {
     uri: {
         forEveryone: `/expenses`,
-        forUser: `expenses/user/:id`,
+        forUser: `expenses/user/:`,
     },
     _normalizeData(expenses) {
         console.log('expenses: ', expenses)
@@ -30,8 +30,13 @@ const ExpensesRepository = {
     // add uri later
     getAll() {
         return API.get(this.uri.forEveryone)
-        .then(this._normalizeData)
+        .then(this._normalizeData);
     },
+
+    approveExpense(decision, id) {
+        return API.post(`/api/${decision}/expenses`, {"id": id})
+        .then(this._normalizeData);
+    }
 
 
 }
