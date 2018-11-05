@@ -35,8 +35,9 @@ const ExpensesRepository = {
 
     approveExpense(decision, id) {
     	decision = decision.toLowerCase();
-        return API.post(`/decision?=${decision}/expenses/`, {"id": id})
-        .then(this._normalizeData);
+        return API.post(`/decision/decision?decision=${decision}`, {"id": id})
+        .then(success => success)
+        .catch(err => console.log('Err: ', err))
     }
 
 

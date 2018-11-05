@@ -6,12 +6,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import delegate.EmployeeDelegate;
 import delegate.ExpensesDelegate;
 import delegate.LoginDelegate;
 
 public class RequestHelper {
 	private LoginDelegate ld = new LoginDelegate();
 	private ExpensesDelegate exd = new ExpensesDelegate();
+	private EmployeeDelegate ed = new EmployeeDelegate();
+	private DecisionDelegate dd = new DecisionDelegate();
 	
 	public void process(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("In request helper ------>" + req.getMethod());
@@ -27,11 +30,14 @@ public class RequestHelper {
 		
 //		get the employee's info for home, first fifty expenses: .../api/employee/
 		switch(switchString) {
+		case "decision": dd.handleDecision(req, res); break;
 		case "expenses": if ("GET".equals(req.getMethod())) {
 			exd.getExpenses(req, res);
+		} else {
+			exd.postExpenses(req, res);
 		}
 		case "employee": if ("GET".equals(req.getMethod())) {
-//			
+			ed.getAllEmployees(req, res);
 		}; break;
 		case "manager": /*TODO: serve the Manager assets*/; break;
 		case "login": if ("POST".equals(req.getMethod())) {

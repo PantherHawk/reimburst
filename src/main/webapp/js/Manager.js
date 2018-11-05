@@ -83,6 +83,7 @@ window.onload = function() {
               info.innerText = exp.description;
               date.innerText = `${exp.daysSinceRequest} day${exp.daysSinceRequest > 1 ? 's' : ''} ago`;
               moreInfo.innerText = `${exp.status}`;
+              moreInfo.setAttribute("id", `id-status-${exp.id}`);
               card.append(heading, date, employee);
               li.append(approve, reject, card, info, moreInfo);
               expensesContainer.appendChild(li);
@@ -123,7 +124,8 @@ function viewAll() {
 function handleApproval() {
   console.log("clicked   " + event.target.innerText);
   // grab the expense id 
-  const clicked_id = event.target.dataset.id;
+  const clicked = event.target;
+  const clicked_id = clicked.dataset.id;
   // grab the manager data off the session ... somehow ...
   // grab the button label
   const decision = event.target.innerText;
@@ -131,7 +133,11 @@ function handleApproval() {
   ExpensesRepository.approveExpense(decision, clicked_id)
   .then(data => {
     console.log("result of approval procedure    " + data);
+    console.log("decision made was   [ " + decision + " ]");
     // update current card's status
-    event.target.dataset.status = decision;
+  })
+  .then(now => {
+	  const newStatus = document.querySelector(`#id-status-${clicked_id}`);
+	  newStatus.innerText = decision;
   });
 }

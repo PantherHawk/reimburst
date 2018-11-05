@@ -14,6 +14,10 @@ public class Expense {
 	private int teamId;
 	
 	
+	public Expense(int id) {
+		super();
+		this.id = id;
+	}
 //	to put things in the db
 	public Expense(double amount, String name, String description, int employeeId, int teamId) {
 		super();
