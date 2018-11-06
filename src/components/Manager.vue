@@ -28,7 +28,7 @@ export default {
                 { name: "Prada", amount: "$500", status: "Approved", emp_id: "2", dateSubmitted: new Date('11-2-2018') },
                 { name: "Grubhub", amount: "$1200", status: "Rejected", emp_id: "2", dateSubmitted: new Date('10-28-2018') },
             ],
-            employeeSelected: null
+            employeeSelected: null,
         }
     },
     computed: {
@@ -47,8 +47,7 @@ export default {
     methods: {
         showAll() {
             console.log()
-            this.filteredItems = this.expenses
-            return this.filteredItems
+
         }
     }
 }
