@@ -93,3 +93,12 @@ function submitExpense(event) {
     setTimeout(() => toAnimate.setAttribute("class", "not-yet-submitted"), 5000);
 
 }
+
+function logout() {
+	console.log("clicked logout ");
+	
+	EmployeeRepository.logout()
+	.then(data => {
+		window.location.replace("/");
+	})
+}
