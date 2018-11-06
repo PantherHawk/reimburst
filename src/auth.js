@@ -6,7 +6,7 @@ export default {
             this.onChange(true)
             return
         }
-        pretendRequest(username, password, (res) => {
+        realLogin(username, password, (res) => {
             if (res.authenticated) {
                 localStorage.token = res.token
                 if (cb) cb(true)
@@ -46,4 +46,33 @@ function pretendRequest(email, password, cb) {
             cb({ authenticated: false })
         }
     }, 300)
+    
+}
+// TODO: real request to api
+function realLogin(email, password, cb) {
+    // hit db, return promise
+    const body = JSON.stringify({ email: email, password: password })
+    fetch(`https://jsonplaceholder.typicode.com/users`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: body,
+        mode: 'cors',
+    })
+    .then(users => {
+        const result = users.json()
+        console.log('users from dummy db: ', result)
+        return result
+    })
+    .then(json => json)
+    .then(user => {
+        console.log('user object', user)
+        if (user["id"] > 0) {
+            cb({
+                authenticated: true,
+                token: Math.random().toString(36).substring(7),
+            })
+        } else {
+            cb({ authenticated: false })
+        }
+    })
 }

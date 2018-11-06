@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>Auth Works</h1>
+    <h1>ERStwhile</h1>
     <ul>
       <li>
         <router-link v-if="loggedIn" to="/logout">Log out</router-link>
