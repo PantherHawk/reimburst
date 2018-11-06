@@ -7,6 +7,7 @@ import Employee from './components/Employee'
 import About from './components/About'
 import Profile from './components/Profile'
 import Expenses from './components/Expenses'
+import ExpensesList from './components/ExpensesList';
 import auth from './auth'
 
 Vue.use(VueRouter);
