@@ -1,8 +1,8 @@
 <template>
     <div>
         <ul id="expenses">
-            <li v-for="{name, amount, status} in expenses">
-                {{ name }} - {{ amount }} - {{ status }}
+            <li v-for="{id, title, userId} in expenses">
+                {{ id }} - {{ title }} - {{ userId }}
             </li>
         </ul>
         <!-- <h4>Pending list</h4> -->
@@ -24,7 +24,13 @@
     </div>
 </template>
 <script>
+// import expensesMixin from '../mixins/expensesMixin'
+
 export default {
+    created: function() {
+        console.log('created ExpensesList component!   ')
+        this.getExpenses()
+    },
     data() {
         return {
             expenses: [
@@ -39,6 +45,13 @@ export default {
         }
     },
     methods: {
+        getExpenses() {
+            // TODO: fetch from Servlet, right now it's just jsonplaceholder
+            fetch(`https://jsonplaceholder.typicode.com/albums`)
+            .then(res => res.json())
+            .then(expenses => this.expenses = expenses)
+            .catch(err => console.log(err))
+        }
     },
     computed: {
         filteredItems() {
