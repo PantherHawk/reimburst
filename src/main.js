@@ -5,6 +5,8 @@ import Login from './components/Login'
 import Manager from './components/Manager'
 import Employee from './components/Employee'
 import About from './components/About'
+import Profile from './components/Profile'
+import Expenses from './components/Expenses'
 import auth from './auth'
 
 Vue.use(VueRouter);
@@ -28,7 +30,10 @@ const router = new VueRouter({
     { path: '/login', component: Login},
     { path: '/about', component: About },
     { path: '/manager', component: Manager, beforeEnter: requireAuth },
-    { path: '/employee', component: Employee, beforeEnter: requireAuth },
+    { path: '/employee', component: Employee, beforeEnter: requireAuth, children: [
+      { path: '/profile', component: Profile },
+      { path: '/expenses', component: Expenses },
+    ] },
     { path: '/logout', 
       beforeEnter (to, from, next) {
         auth.logout()
