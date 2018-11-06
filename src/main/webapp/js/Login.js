@@ -16,6 +16,7 @@ function loginSubmit(event) {
 	
 	EmployeeRepository.loginEmployee({ "username": user, "password": pass })
 	.then(user => {
+		sessionStorage.setItem("user", JSON.stringify(user));
 //		console.log("user response: ", JSON.parse(user))
 		if (user.id > 0 && user.hasManager < 1) {
 //			redirect;

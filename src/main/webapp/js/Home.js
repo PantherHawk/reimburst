@@ -46,6 +46,23 @@ window.onload = function () {
 
 
     // only display pending 
+    
+//    fill profile section with sessionStorage info;
+    const user = JSON.parse(sessionStorage["user"]);
+    const { firstName, lastName, id, email, info, username } = user;
+    const name = document.querySelector("#name");
+    name.innerText = `${firstName}  ${lastName}`;
+//    jQuery(name).fitText(0.38)
+    const userName = document.querySelector("#username");
+    userName.innerText = `${username}`;
+//    $(userName).fitText(0.38)
+    const email_address = document.querySelector("#email");
+    email_address.innerText = email;
+    const about = document.querySelector("#about");
+    about.innerText = info;
+//    $(about).fitText(0.38)
+//    TODO: upload avatar...
+    const avatar = document.querySelector("#avatar");
 
 }
 

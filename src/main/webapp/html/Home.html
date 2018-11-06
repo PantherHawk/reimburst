@@ -159,7 +159,28 @@
                 <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
             </div>
         </div>
-        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
+       <style>
+       	.toCenter {
+	       	 margin: 0 auto; /* Added */
+	        float: none; /* Added */
+	        margin-bottom: 10px; /* Added */
+        }
+       </style>
+        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+        	<div class="">
+        		<div class="card toCenter" style="width: 18rem; align:center;">
+			  <img class="card-img-top" src="..." alt="Card image cap">
+			  <div class="card-body">
+			    <h5 class="card-title" id="name"></h5>
+			    <p class="card-text" id="username"></p>
+			  </div>
+			  <ul class="list-group list-group-flush">
+			    <li class="list-group-item" id="about"></li>
+			    <li class="list-group-item" id="email"></li>
+			  </ul>
+	        </div>
+        	</div>
+	        
     </div>
 
     <script>
@@ -170,6 +191,7 @@
             });
         });
     </script>
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/fitty.min.js"></script>
     <script src="../js/API.js"></script>
     <script src="../js/ExpensesRepository.js"></script>
     <script src="../js/EmployeeRepository.js"></script>
