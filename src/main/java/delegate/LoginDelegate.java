@@ -1,9 +1,6 @@
 package delegate;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,16 +13,22 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Employee;
-import beans.Expense;
 import data.EmployeeService;
-import data.ExpenseService;
 
 public class LoginDelegate {
 	
 	public void login(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-String page = "";
+		
+		String page = "";
 		
 		Employee authEmployee = null;
+		
+//		res.setHeader("Access-Control-Allow-Origin", "*");
+//        res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//        res.setHeader("Access-Control-Max-Age", "3600");
+//        res.setHeader("Access-Control-Allow-Headers", "X-PINGOTHER,Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization");
+//        res.addHeader("Access-Control-Expose-Headers", "xsrf-token");
+        
 		
 		try {
 			authEmployee = new ObjectMapper().readValue(req.getReader(	), Employee.class);
@@ -47,13 +50,14 @@ String page = "";
 				if (login.getHasManager() > 0) {
 					System.out.println("Loggin in an employee...");
 //					Fetch all their expenses
-					List<Expense> allTheirExpenses = new ArrayList<Expense>();
-					allTheirExpenses = ExpenseService.
-										getInstance().
-										getEmployeeSpecificExpenses(login.getId());
+//					List<Expense> allTheirExpenses = new ArrayList<Expense>();
+//					allTheirExpenses = ExpenseService.
+//										getInstance().
+//										getEmployeeSpecificExpenses(login.getId());
 //					Send them the employee homepage
 						ObjectMapper mapper = new ObjectMapper();
 						res.setHeader("Content-Type", "application/json");
+						res.setHeader("mode", "no-cors");
 						mapper.writeValue(res.getOutputStream(), login);
 //						RequestDispatcher dispatch = req.getRequestDispatcher("/html/Home.html");
 //						dispatch.include(req, res);
@@ -67,6 +71,7 @@ String page = "";
 //					TODO: Get all the expenses for all the employees
 						ObjectMapper mapper = new ObjectMapper();
 						res.setHeader("Content-Type", "application/json");
+						setAccessControlHeaders(res);
 						mapper.writeValue(res.getOutputStream(), login);
 					}
 			   }
@@ -109,6 +114,24 @@ String page = "";
 //		out.println(json);
 //		out.flush();
 	}
+	
+	private void setAccessControlHeaders(HttpServletResponse resp) {
+	      resp.setHeader("Access-Control-Allow-Origin", "http://localhost:8082");
+	      resp.setHeader("Access-Control-Allow-Methods", "POST");
+	  }
+//	 protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws ServletException, IOException {
+//         System.out.println("Adding CORS Headers ........................");        
+//         res.setHeader("Access-Control-Allow-Origin", "*");
+//         res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//         res.setHeader("Access-Control-Max-Age", "3600");
+//         res.setHeader("Access-Control-Allow-Headers", "X-PINGOTHER,Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization");
+//         res.addHeader("Access-Control-Expose-Headers", "xsrf-token");
+//         if ("OPTIONS".equals(req.getMethod())) {
+//          res.setStatus(HttpServletResponse.SC_OK);
+//         } else { 
+//          chain.doFilter(req, res);
+//         }        
+//     }
 
 
 }
