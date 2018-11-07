@@ -51,7 +51,8 @@ export default {
             method: 'GET',
             headers: new Headers({
                 'Accept': 'application/json'
-            })
+            }),
+            mode: 'cors'
         })
         .then(this._handleError)
         .then(this._handleContentType)
@@ -64,7 +65,7 @@ export default {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify(body),
-            mode: 'no-cors' 
+            mode: 'cors' 
             })
             .then(r => this._handleContentType(r))
             .then(l => this._handleError(l))

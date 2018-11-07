@@ -3,6 +3,7 @@ import API from './util/API'
 
 export default {
     login(username, password, cb) {
+
         cb = arguments[arguments.length - 1]
         if (localStorage.token) {
             if (cb) cb(true)
@@ -76,13 +77,14 @@ function realLogin(username, password, cb) {
     })
     .then(json => JSON.stringify(json))
     .then(user => {
-        console.log('user object', user)
-        if (user["id"] > 0) {
-            cb({
+        console.log('user id', )
+        if (JSON.parse(user).id > 0) {
+            return cb({
                 authenticated: true,
                 token: Math.random().toString(36).substring(7),
             })
         } else {
+            console.log('faq')
             cb({ authenticated: false })
         }
     })
