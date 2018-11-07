@@ -65,16 +65,16 @@ function realLogin(username, password, cb) {
     // EmployeeRepository.loginEmployee({username, password})
     fetch(`http://localhost:8081/EmployeeReimbursement/api/login`, {
         method: 'POST',
-        headers: { 'Content-type': 'application/json' },
+        // headers: { 'Content-type': 'application/json' },
         body: JSON.stringify(body),
-        mode: 'no-cors' 
+        mode: 'cors' 
     })
     .then(users => {
         const result = users
         console.log('user from db: ', result)
-        return result
+        return result.json()
     })
-    .then(json => json)
+    .then(json => JSON.stringify(json))
     .then(user => {
         console.log('user object', user)
         if (user["id"] > 0) {
