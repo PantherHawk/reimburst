@@ -25,6 +25,7 @@
 </template>
 <script>
 // import expensesMixin from '../mixins/expensesMixin'
+import ExpensesRepository from '../util/ExpensesRepository';
 
 export default {
     created: function() {
@@ -47,7 +48,8 @@ export default {
     methods: {
         getExpenses() {
             // TODO: fetch from Servlet, right now it's just jsonplaceholder
-            fetch(`https://jsonplaceholder.typicode.com/albums`)
+            // fetch(`https://jsonplaceholder.typicode.com/albums`)
+            ExpensesRepository.getAll()
             .then(res => res.json())
             .then(expenses => this.expenses = expenses)
             .catch(err => err)

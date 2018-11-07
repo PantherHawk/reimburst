@@ -25,11 +25,11 @@ export default {
     },
     // add uri later
     getForUser(user) {
-        return API.get(`/expenses/`);
+        return API.get(`/expenses`);
     },
     // add uri later
     getAll() {
-        return API.get(`/expenses/`)
+        return API.get(`/expenses`)
         .then(this._normalizeData);
     },
 

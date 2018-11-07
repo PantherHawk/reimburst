@@ -13,6 +13,9 @@ export default {
         realLogin(username, password, (res) => {
             if (res.authenticated) {
                 localStorage.token = res.token
+                if (res.manager) {
+                    localStorage.manager = res.manager
+                }
                 if (cb) cb(true)
                 this.onChange(true)
             } else {
@@ -80,9 +83,11 @@ function realLogin(username, password, cb) {
     })
     .then(json => JSON.stringify(json))
     .then(user => {
-        console.log('user id', )
+        console.log('user id', JSON.parse(user).id)
         if (JSON.parse(user).id > 0) {
+            console.log("user on the frontend")
             if (JSON.parse(user).hasManager < 1) {
+                console.log("manager on the frontend ...")
                 return cb({
                     authenticated: true,
                     manager: true,

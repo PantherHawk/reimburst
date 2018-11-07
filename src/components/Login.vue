@@ -29,7 +29,7 @@ export default {
     methods: {
         login() {
             auth.login(this.username, this.password, loggedIn => {
-                // console.log('loggedin: ', loggedIn)s
+                console.log('loggedin: ', loggedIn)
                 if (!loggedIn) {
                     this.error = true
                 } else {
