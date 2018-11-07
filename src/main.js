@@ -25,13 +25,24 @@ function requireAuth(to, from, next) {
   }
 }
 
+function requireManagerAuth(to, from, next) {
+  if (!auth.manager() || !auth.loggedIn()) {
+    next({
+      path: '/login',
+      query: { redirect: to.fullPath }
+    })
+  } else {
+    next()
+  }
+}
+
 const router = new VueRouter({
   mode: 'history',
   base: __dirname,
   routes: [
     { path: '/login', component: Login},
     { path: '/about', component: About },
-    { path: '/manager', component: Manager, beforeEnter: requireAuth },
+    { path: '/manager', component: Manager, beforeEnter: requireManagerAuth },
     { path: '/employee', component: Employee, beforeEnter: requireAuth, children: [
       { path: '/profile', component: Profile },
       { path: '/expenses', component: Expenses },

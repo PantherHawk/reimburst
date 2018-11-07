@@ -35,6 +35,9 @@ export default {
     loggedIn() {
         return !!localStorage.token
     },
+    manager() {
+        return !!localStorage.manager
+    },
 
     onChange() {}
 }
@@ -79,10 +82,18 @@ function realLogin(username, password, cb) {
     .then(user => {
         console.log('user id', )
         if (JSON.parse(user).id > 0) {
-            return cb({
-                authenticated: true,
-                token: Math.random().toString(36).substring(7),
-            })
+            if (JSON.parse(user).hasManager < 1) {
+                return cb({
+                    authenticated: true,
+                    manager: true,
+                    token: Math.random().toString(36).substring(7),
+                })
+            } else {
+                return cb ({
+                    authenticated: true,
+                    token: Math.random().toString(36).substring(7),
+                })
+            }
         } else {
             console.log('faq')
             cb({ authenticated: false })
