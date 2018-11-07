@@ -1,15 +1,12 @@
-/**
- * API for hitting the servlet 
- */
 
-const API = {
+export default {
     /** check whether the content type is correct before processing further
      */
     url: {
     	dummyExpenses: `https://jsonplaceholder.typicode.com/todos`,
     	dev: `http://localhost:8081/EmployeeReimbursement/api`,
     	prod: ``
-    		},
+    },
 
     _handleError(_response) {
     	console.log("handling any errors from the response...")
@@ -17,7 +14,7 @@ const API = {
     		"404": "Login.html",
     		"500": "ServerError.html",
     	}
-    	console.log("response status----------->   " + _response.status)
+    	console.log("response ----------->   " + _response.status)
     	if (_response.status == "404") {
     		console.log("got a 404, redirecting to login.")
     		window.location.replace(status[_response.status]);
@@ -31,7 +28,8 @@ const API = {
     },
 
     _handleContentType(_response) {
-    	console.log("Checking the content type and processing json...")
+        console.log("Checking the content type and processing json...")
+        console.log("the fuck's my response obj ......", _response)
         const contentType = _response.headers.get('content-type');
         const redirected = _response.redirected;
         console.log('content type:    ', contentType)
@@ -65,10 +63,11 @@ const API = {
         return fetch(this.url.dev + _endpoint, {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
-            body: JSON.stringify(body)
+            body: JSON.stringify(body),
+            mode: 'no-cors' 
             })
-            .then(this._handleError)
-            .then(this._handleContentType)
+            .then(r => this._handleContentType(r))
+            .then(l => this._handleError(l))
             .catch(error => { throw new Error(error) })
     }
 }

@@ -50,7 +50,7 @@ export default {
             fetch(`https://jsonplaceholder.typicode.com/albums`)
             .then(res => res.json())
             .then(expenses => this.expenses = expenses)
-            .catch(err => console.log(err))
+            .catch(err => err)
         }
     },
     computed: {

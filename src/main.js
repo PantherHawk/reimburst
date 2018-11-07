@@ -9,6 +9,7 @@ import Profile from './components/Profile'
 import Expenses from './components/Expenses'
 import ExpenseForm from './components/ExpenseForm'
 import auth from './auth'
+import API from './util/API'
 
 Vue.use(VueRouter);
 

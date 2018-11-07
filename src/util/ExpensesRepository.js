@@ -1,6 +1,6 @@
-// const API = require('../../util/API');
+import API from './API'
 
-const ExpensesRepository = {
+export default {
     uri: {
         forEveryone: `/expenses`,
         forUser: `expenses/user/:`,
@@ -25,11 +25,11 @@ const ExpensesRepository = {
     },
     // add uri later
     getForUser(user) {
-        return API.get(`/api/expenses/`);
+        return API.get(`/expenses/`);
     },
     // add uri later
     getAll() {
-        return API.get(this.uri.forEveryone)
+        return API.get(`/expenses/`)
         .then(this._normalizeData);
     },
 

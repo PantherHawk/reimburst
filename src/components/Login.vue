@@ -21,7 +21,7 @@ import auth from '../auth'
 export default {
     data() {
         return {
-            username: 'joe@example.com',
+            username: 'martian_manhunter',
             password: 'password',
             error: false
         }
@@ -29,7 +29,7 @@ export default {
     methods: {
         login() {
             auth.login(this.username, this.password, loggedIn => {
-                console.log('loggedin: ', loggedIn)
+                // console.log('loggedin: ', loggedIn)s
                 if (!loggedIn) {
                     this.error = true
                 } else {

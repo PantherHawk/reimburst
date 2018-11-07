@@ -1,3 +1,6 @@
+import EmployeeRepository from './util/EmployeeRepository'
+import API from './util/API'
+
 export default {
     login(username, password, cb) {
         cb = arguments[arguments.length - 1]
@@ -49,18 +52,26 @@ function pretendRequest(email, password, cb) {
     
 }
 // TODO: real request to api
-function realLogin(email, password, cb) {
+function realLogin(username, password, cb) {
+    const body = { username: username, password: password }
     // hit db, return promise
-    const body = JSON.stringify({ email: email, password: password })
-    fetch(`https://jsonplaceholder.typicode.com/users`, {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: body,
-        mode: 'cors',
+    // const body = JSON.stringify({ email: email, password: password })
+    // fetch(`https://jsonplaceholder.typicode.com/users`, {
+    //     method: "POST",
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: body,
+    //     mode: 'cors',
+    // })
+    // EmployeeRepository.loginEmployee({username, password})
+    fetch(`http://localhost:8081/EmployeeReimbursement/api/login`, {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify(body),
+        mode: 'no-cors' 
     })
     .then(users => {
-        const result = users.json()
-        console.log('users from dummy db: ', result)
+        const result = users
+        console.log('user from db: ', result)
         return result
     })
     .then(json => json)

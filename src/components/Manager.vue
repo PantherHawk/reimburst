@@ -18,6 +18,8 @@
     </div>
 </template>
 <script>
+import ExpensesRepository from '../util/ExpensesRepository'
+
 export default {
     created: function() {
         this.getExpenses()
