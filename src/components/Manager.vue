@@ -16,7 +16,7 @@
                 {{ item.title }} - {{ item.id }} - {{ item.userId }}
             </li>
         </ul> -->
-        <expense-list v-bind:expenses="allExpenses">Expense List</expense-list>
+        <expense-list v-bind:statusToggler="approveOrReject" v-bind:expenses="allExpenses">Expense List</expense-list>
     </div>
 </template>
 <script>
@@ -84,9 +84,13 @@ export default {
             .then(employees => this.employees = employees)
             .catch(err => console.log(err))
         },
-        approveOrReject($event) {
-            console.log("event parent:   ", $event.target.parentNode.key)
-            this.decision = $event.target.innerText
+        approveOrReject(expense, $event) {
+
+            console.log("toggled status:   ", $event.target.innerText)
+            console.log("which expense do we want to approve ------> " + JSON.stringify(expense))
+            // TODO: send update to db
+            expense.status = $event.target.innerText
+            // this.decision = $event.target.innerText;
 
         }
     }

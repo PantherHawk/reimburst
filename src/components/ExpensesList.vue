@@ -12,6 +12,8 @@
  */ -->
         <ul id="list-group">
             <li v-on:click="toggleCard(exp)" v-for="exp in expenses" :key="exp.id" class="list-group-item d-flex justify-content-between align-items-center">
+            <button v-on:click.stop.prevent="statusToggler(exp, $event)">Approve</button>
+            <button v-on:click.stop.prevent="statusToggler(exp, $event)">Reject</button>
                 {{ exp.title }} 
                 <span class="badge badge-primary badge-pill">${{ exp.amount }}</span>
                 <small> {{ exp.daysSinceRequest }} day{{ exp.daysSinceRequest > 1 ? 's' : '' }} ago </small>
@@ -50,16 +52,17 @@
 import ExpensesRepository from '../util/ExpensesRepository';
 
 export default {
-    props: ['expenses'],
+    props: ['expenses', 'statusToggler'],
     created: function() {
         console.log('created ExpensesList component!   ')
         console.log('this.expenses: ', this.expenses)
+        
 
         // this.getExpenses()
     },
     data() {
         return {
-            expenses: this.expenses,
+            // expenses: this.expenses,
             // expenses: expenseList,
             // expenses: [
             //     { name: "Uber", amount: "$200", status: "Pending", emp_id: "1", dateSubmitted: new Date('11-1-2018'), description: "traffic, cars, transportaion" },
