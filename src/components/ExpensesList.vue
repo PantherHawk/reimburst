@@ -50,17 +50,22 @@
 import ExpensesRepository from '../util/ExpensesRepository';
 
 export default {
+    props: ['expenses'],
     created: function() {
         console.log('created ExpensesList component!   ')
-        this.getExpenses()
+        console.log('this.expenses: ', this.expenses)
+
+        // this.getExpenses()
     },
     data() {
         return {
-            expenses: [
-                { name: "Uber", amount: "$200", status: "Pending", emp_id: "1", dateSubmitted: new Date('11-1-2018'), description: "traffic, cars, transportaion" },
-                { name: "Prada", amount: "$500", status: "Approved", emp_id: "1", dateSubmitted: new Date('11-2-2018'), description: "shoes, shopping, luxury" },
-                { name: "Grubhub", amount: "$1200", status: "Rejected", emp_id: "1", dateSubmitted: new Date('10-28-2018'), description: "food, lunch" },
-            ],
+            expenses: this.expenses,
+            // expenses: expenseList,
+            // expenses: [
+            //     { name: "Uber", amount: "$200", status: "Pending", emp_id: "1", dateSubmitted: new Date('11-1-2018'), description: "traffic, cars, transportaion" },
+            //     { name: "Prada", amount: "$500", status: "Approved", emp_id: "1", dateSubmitted: new Date('11-2-2018'), description: "shoes, shopping, luxury" },
+            //     { name: "Grubhub", amount: "$1200", status: "Rejected", emp_id: "1", dateSubmitted: new Date('10-28-2018'), description: "food, lunch" },
+            // ],
             filteredExpenses: [],
             filterText: '',
             status: '',
@@ -72,16 +77,17 @@ export default {
         }
     },
     methods: {
-        getExpenses() {
-            // TODO: fetch from Servlet, right now it's just jsonplaceholder
-            // fetch(`https://jsonplaceholder.typicode.com/albums`)
-            ExpensesRepository.getAll()
-            .then(expenses => {
-                console.log("Expenses in vue:   " + JSON.stringify(expenses))
-                this.expenses = expenses
-                })
-            .catch(err => err)
-        },
+        // commenting out to receive list of expenses via props from Manager or Employee vue
+        // getExpenses() {
+        //     // TODO: fetch from Servlet, right now it's just jsonplaceholder
+        //     // fetch(`https://jsonplaceholder.typicode.com/albums`)
+        //     ExpensesRepository.getAll()
+        //     .then(expenses => {
+        //         console.log("Expenses in vue:   " + JSON.stringify(expenses))
+        //         this.expenses = expenses
+        //         })
+        //     .catch(err => err)
+        // },
         toggleCard(exp) {
             console.log("clicked to toggle card")
             console.log(exp)

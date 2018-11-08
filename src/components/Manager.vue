@@ -9,20 +9,26 @@
                 </div>
             </li>
         </ul>
-        <ul id="expenses">
+        <!-- <ul id="expenses">
             <li v-bind:key="item.id" v-for="item of filteredItems">
                 <button v-on:click="approveOrReject">Approve</button>
                 <button v-on:click="approveOrReject">Reject</button>
                 {{ item.title }} - {{ item.id }} - {{ item.userId }}
             </li>
-        </ul>
+        </ul> -->
+        <expense-list v-bind:expenses="allExpenses">Expense List</expense-list>
     </div>
 </template>
 <script>
 import ExpensesRepository from '../util/ExpensesRepository'
 import EmployeeRepository from '../util/EmployeeRepository';
+import ExpensesList from './ExpensesList';
 
 export default {
+    components: {
+        'expense-list': ExpensesList,
+    },
+    
     created: function() {
         this.getExpenses()
         this.getEmployees()
@@ -33,7 +39,7 @@ export default {
                 { name: 'Batman', id: 1 },
                 { name: 'Robin', id: 2 },
             ],
-            expenses: [
+            allExpenses: [
                 { name: "Uber", amount: "$200", status: "Pending", emp_id: "1", dateSubmitted: new Date('11-1-2018') },
                 { name: "Prada", amount: "$500", status: "Approved", emp_id: "2", dateSubmitted: new Date('11-2-2018') },
                 { name: "Grubhub", amount: "$1200", status: "Rejected", emp_id: "2", dateSubmitted: new Date('10-28-2018') },
@@ -44,7 +50,7 @@ export default {
     computed: {
         filteredItems() {
             console.log('employeeSelected  ', this.employeeSelected)
-            return this.expenses.filter(exp => {
+            return this.allExpenses.filter(exp => {
                 return exp.emp_id == this.employeeSelected;
             })
         },
@@ -61,10 +67,12 @@ export default {
         },
         getExpenses() {
             // TODO: fetch from Servlet, right now it's just jsonplaceholder
-            fetch(`https://jsonplaceholder.typicode.com/albums`)
-            .then(res => res.json())
-            .then(expenses => this.expenses = expenses)
-            .catch(err => console.log(err))
+             ExpensesRepository.getAll()
+            .then(expenses => {
+                console.log("Expenses in vue:   " + JSON.stringify(expenses))
+                this.allExpenses = expenses
+                })
+            .catch(err => err)
         },
         getEmployees() {
             // TODO: fetch from Servlet, right now it's just jsonplaceholder
