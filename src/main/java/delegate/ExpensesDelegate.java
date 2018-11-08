@@ -15,14 +15,30 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Employee;
 import beans.Expense;
+import data.EmployeeService;
 import data.ExpenseService;
-
+import util.WebUtils;
 public class ExpensesDelegate {
+	
 	public void getExpenses(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		HttpSession session = req.getSession();
+		
+		System.out.println("Jsession id ?   " + req.getParameter("JSESSIONID"));
+		Map<String, String> headers = WebUtils.getHeadersInfo(req);
+		System.out.println("Request headers    --------  " + headers);
+		String username = headers.get("username");
+		String password = headers.get("password");
+		Employee empl = EmployeeService.getInstance().login(new Employee(username, password));
+
+		HttpSession session = req.getSession(false);
+		if (session == null) {
+			System.out.println("session is null");
+			session = req.getSession();
+		} 
 		Employee employee = (Employee) session.getAttribute("user");
+		System.out.println("session.getAttribute(\"user\")           " + session.getAttribute("user"));
 		System.out.println("Employee bean in expense delegate made from session-------->" + employee);
-		if (employee == null) {
+		
+		if (empl == null) {
 			System.out.println("no session found in expense delegate, sending back to login...");
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/html/Login.html");
 			dispatcher.forward(req, res);
@@ -32,7 +48,7 @@ public class ExpensesDelegate {
 		
 		List<Expense> expenses = null;
 		System.out.println("when expense array is null---->" + expenses);
-		if (employee.getHasManager() < 1) {
+		if (empl.getHasManager() < 1) {
 			System.out.println("employee is a manager, so grabbing all the expenses for her...");
 //			get all expenses 
 			expenses = ExpenseService.getInstance().getEveryExpense();
@@ -42,7 +58,7 @@ public class ExpensesDelegate {
 			mapper.writeValue(res.getOutputStream(), expenses);
 		} else {
 //			get expenses for one employee
-			expenses = ExpenseService.getInstance().getEmployeeSpecificExpenses(employee.getId());
+			expenses = ExpenseService.getInstance().getEmployeeSpecificExpenses(empl.getId());
 			System.out.println("filled expense array from the DB----->" + expenses);
 			ObjectMapper mapper = new ObjectMapper();
 			res.setHeader("Content-Type", "application/json");

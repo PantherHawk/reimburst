@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -33,7 +34,7 @@ public class LoginDelegate {
 		try {
 			authEmployee = new ObjectMapper().readValue(req.getReader(	), Employee.class);
 			System.out.println("employee object: " + authEmployee);
-
+			
 			Employee login = EmployeeService.getInstance().login(authEmployee);
 			System.out.println("login object ------- " + login);
 			if(login.getId() < 1) {
@@ -43,6 +44,9 @@ public class LoginDelegate {
 				System.out.println("login success! redirecting to home page.");
 //				Make a new session
 				HttpSession session = req.getSession();
+				session.setMaxInactiveInterval(5*60*60);
+				Cookie message = new Cookie("message", "Welcome");
+				res.addCookie(message);
 //				Throw the user object into the session
 				session.setAttribute("user", login);
 				System.out.println("session:   " + session);
@@ -55,6 +59,9 @@ public class LoginDelegate {
 //										getInstance().
 //										getEmployeeSpecificExpenses(login.getId());
 //					Send them the employee homepage
+//					Throw the user object into the session
+					session.setAttribute("user", login);
+					System.out.println("session:   " + session.getAttribute("user"));
 						ObjectMapper mapper = new ObjectMapper();
 						res.setHeader("Content-Type", "application/json");
 						res.setHeader("mode", "no-cors");
@@ -98,9 +105,15 @@ public class LoginDelegate {
 		} else {
 			Employee employee = (Employee) session.getAttribute("user");
 			if (employee.getHasManager() < 1) {
-				resp.sendRedirect("/EmployeeReimbursement/html/Manager.html");
+//				send back manager object
+				ObjectMapper mapper = new ObjectMapper();
+				resp.setHeader("Content-Type", "application/json");
+				mapper.writeValue(resp.getOutputStream(), employee);
 			} else {
-				resp.sendRedirect("/EmployeeReimbursement/html/Home.html");
+//				resp.sendRedirect("/EmployeeReimbursement/html/Home.html");
+				ObjectMapper mapper = new ObjectMapper();
+				resp.setHeader("Content-Type", "application/json");
+				mapper.writeValue(resp.getOutputStream(), employee);
 			}
 		}
 	}

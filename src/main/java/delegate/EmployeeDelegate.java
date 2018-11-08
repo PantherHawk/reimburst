@@ -20,6 +20,7 @@ public class EmployeeDelegate {
 		System.out.println("Hit employee delegate...");
 		HttpSession session = req.getSession();
 		System.out.println("Trying to make employee bean out of session data...");
+		System.out.println("test for user session in employee delegate --------------    " + session.getAttribute("user"));
 		Employee employee = (Employee)session.getAttribute("user");
 		
 		if (employee == null) {
