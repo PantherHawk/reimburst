@@ -13,7 +13,7 @@ export default {
             return {
                 id: id,
                 title: name,
-                status: status == null ? 'Pending' : (status == 'APPROVED' ? 'Approved' : 'Rejected'),
+                status: status == null ? 'Pending' : (status === "approve" ? 'Approved' : 'Rejected'),
                 amount: amount,
                 daysSinceRequest: diffDays(new Date(), new Date(dateSubmitted)),
                 dateHandled: new Date(dateHandled),

@@ -88,8 +88,13 @@ export default {
 
             console.log("toggled status:   ", $event.target.innerText)
             console.log("which expense do we want to approve ------> " + JSON.stringify(expense))
-            // TODO: send update to db
+            // TODO: animations
             expense.status = $event.target.innerText
+            // TODO: send update to db
+            ExpensesRepository.approveExpense(expense.status, expense.id)
+            .then(result => {
+                console.log('result from approve expense   ------->   ' + result)
+            })
             // this.decision = $event.target.innerText;
 
         }

@@ -14,7 +14,7 @@ export default {
     		"404": "Login.html",
     		"500": "ServerError.html",
     	}
-    	console.log("response ----------->   " + _response.status)
+    	console.log("response ----------->   " + JSON.stringify(_response))
     	if (_response.status == "404") {
     		console.log("got a 404, redirecting to login.")
     		window.location.replace(status[_response.status]);
@@ -23,7 +23,9 @@ export default {
     		console.log("got a 500, redirecting to Error page.")
     		window.location.replace(status[_response.status]);
     		return;
-    	}
+    	} else if (JSON.stringify(_response)["success"]) {
+            return _response
+        }
         return _response.ok ? _response : Promise.reject(_response.statusText);
     },
 
@@ -65,7 +67,7 @@ export default {
         console.log("endpoint passed in as   ", _endpoint)
         return fetch(this.url.dev + _endpoint, {
             method: 'POST',
-            headers: { 'Content-type': 'application/json', 'username': localStorage.username, 'password': localStorage.password },
+            headers: { 'Content-Type': 'application/json', 'username': localStorage.username, 'password': localStorage.password },
             body: JSON.stringify(body),
             mode: 'cors' 
             })
