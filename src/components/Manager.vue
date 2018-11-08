@@ -4,6 +4,7 @@
         <ul id="employees">
             <li v-bind:key="employee.id" v-for="employee of employees">
                 <div v-bind:id="employee.id">
+                    {{ employee.firstName + " " +employee.lastName }} -- {{ employee.info }} -- {{ employee.username }}
                     <input type="radio" v-bind:id="employee.id" v-bind:value="employee.id" v-model="employeeSelected"><label for="employee.id">{{ employee.username }}</label>
                 </div>
             </li>
@@ -19,6 +20,7 @@
 </template>
 <script>
 import ExpensesRepository from '../util/ExpensesRepository'
+import EmployeeRepository from '../util/EmployeeRepository';
 
 export default {
     created: function() {
@@ -66,10 +68,9 @@ export default {
         },
         getEmployees() {
             // TODO: fetch from Servlet, right now it's just jsonplaceholder
-            fetch(`https://jsonplaceholder.typicode.com/users`)
-            .then(res => res.json())
+            EmployeeRepository.fetchAll()
             .then(result => {
-                console.log('uers from jsonplaceholder    ' + JSON.stringify(result))
+                console.log('uers from db    ' + JSON.stringify(result))
                 return result
             })
             .then(employees => this.employees = employees)
