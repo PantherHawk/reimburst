@@ -3,6 +3,7 @@ package controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,14 +16,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Employee;
 import beans.Expense;
+import data.EmployeeService;
 import data.ExpenseService;
+import util.WebUtils;
 
 public class DecisionDelegate {
 
 	public void handleDecision(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		System.out.println("made into decision delegate");
-		HttpSession session = req.getSession();
-		Employee employee = (Employee) session.getAttribute("user");
+//		System.out.println("made into decision delegate");
+//		HttpSession session = req.getSession();
+//		Employee employee = (Employee) session.getAttribute("user");
+		
+		System.out.println("Jsession id ?   " + req.getParameter("JSESSIONID"));
+		Map<String, String> headers = WebUtils.getHeadersInfo(req);
+		System.out.println("Request headers    --------  " + headers);
+		String username = headers.get("username");
+		String password = headers.get("password");
+		Employee employee = EmployeeService.getInstance().login(new Employee(username, password));
+		
 //		make sure employee is a manager
 		if (employee.getHasManager() > 0) {
 			res.sendRedirect("html/Login.html");

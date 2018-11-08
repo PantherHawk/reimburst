@@ -71,8 +71,16 @@ public class ExpensesDelegate {
 
 	public void postExpenses(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("hit postexpenses in expenses delegate.");
-		HttpSession session = req.getSession();
-		Employee employee = (Employee) session.getAttribute("user");
+//		HttpSession session = req.getSession();
+//		Employee employee = (Employee) session.getAttribute("user");
+		
+		System.out.println("Jsession id ?   " + req.getParameter("JSESSIONID"));
+		Map<String, String> headers = WebUtils.getHeadersInfo(req);
+		System.out.println("Request headers    --------  " + headers);
+		String username = headers.get("username");
+		String password = headers.get("password");
+		Employee employee = EmployeeService.getInstance().login(new Employee(username, password));
+		
 		System.out.println("Employee object in post expense ------> " + employee);
 //		if employee is a manager, the post is to approve.
 		if (employee.getHasManager() < 1) {

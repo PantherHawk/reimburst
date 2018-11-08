@@ -3,6 +3,7 @@ package delegate;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,15 +14,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Employee;
 import data.EmployeeService;
+import util.WebUtils;
 
 public class EmployeeDelegate {
 	
 	public void getAllEmployees(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("Hit employee delegate...");
-		HttpSession session = req.getSession();
-		System.out.println("Trying to make employee bean out of session data...");
-		System.out.println("test for user session in employee delegate --------------    " + session.getAttribute("user"));
-		Employee employee = (Employee)session.getAttribute("user");
+//		HttpSession session = req.getSession();
+		
+		System.out.println("Jsession id ?   " + req.getParameter("JSESSIONID"));
+		Map<String, String> headers = WebUtils.getHeadersInfo(req);
+		System.out.println("Request headers    --------  " + headers);
+		String username = headers.get("username");
+		String password = headers.get("password");
+		Employee employee = EmployeeService.getInstance().login(new Employee(username, password));
+		
+//		System.out.println("Trying to make employee bean out of session data...");
+//		System.out.println("test for user session in employee delegate --------------    " + session.getAttribute("user"));
+//		Employee employee = (Employee)session.getAttribute("user");
 		
 		if (employee == null) {
 			System.out.println("No session found at employee delegate.");
