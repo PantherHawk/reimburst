@@ -1,8 +1,30 @@
 <template>
     <div>
-        <ul id="expenses">
-            <li v-for="{id, title, userId} in expenses">
-                {{ id }} - {{ title }} - {{ userId }}
+        <!-- /**
+ * 
+ * {"id":22,
+ * "title":"Uber",
+ * "status":"Rejected",
+ * "amount":25,"daysSinceRequest":4,
+ * "dateHandled":1541454059475,
+ * "description":"Crosstown traffic",
+ * "employee_id":28,"team_id":4}
+ */ -->
+        <ul id="list-group">
+            <li v-on:click="toggleCard" v-for="exp in expenses" :key="exp.id" class="list-group-item d-flex justify-content-between align-items-center">
+                {{ exp.title }} 
+                <span class="badge badge-primary badge-pill">${{ exp.amount }}</span>
+                <small> {{ exp.daysSinceRequest }} day{{ exp.daysSinceRequest > 1 ? 's' : '' }} ago </small>
+                <div
+                    v-bind:class="[ isActive ? 'show' : 'hide' ]"
+                >
+                <div class="d-flex w-100 justify-content-between">
+                    {{ exp.status }}
+                </div>
+                <p>
+                    {{ exp.description }}
+                </p>
+                </div>
             </li>
         </ul>
         <!-- <h4>Pending list</h4> -->
@@ -13,7 +35,7 @@
         </ul> -->
         <h3>Filtered List</h3>
         <ul>
-            <li v-for="item of filteredItems">
+            <li v-for="item of filteredItems" :key="item.id">
                 {{ item.name }} - {{ item.amount }} - {{ item.status }}
             </li>
         </ul>
@@ -43,6 +65,10 @@ export default {
             filterText: '',
             status: '',
             search: '',
+            isActive: false,
+            activeStyle: {
+                display: 'block',
+            }
         }
     },
     methods: {
@@ -50,9 +76,16 @@ export default {
             // TODO: fetch from Servlet, right now it's just jsonplaceholder
             // fetch(`https://jsonplaceholder.typicode.com/albums`)
             ExpensesRepository.getAll()
-            .then(res => res.json())
-            .then(expenses => this.expenses = expenses)
+            .then(expenses => {
+                console.log("Expenses in vue:   " + JSON.stringify(expenses))
+                this.expenses = expenses
+                })
             .catch(err => err)
+        },
+        toggleCard() {
+            console.log("clicked to toggle card")
+            this.isActive = !this.isActive
+
         }
     },
     computed: {
@@ -74,7 +107,11 @@ export default {
 }
 </script>
 <style>
-    .active {
-        display: none;
+    .show {
+        display: inline;
+        background-color: blue;
+    }
+    .hide {
+        display: none
     }
 </style>

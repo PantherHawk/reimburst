@@ -13,6 +13,8 @@ export default {
         realLogin(username, password, (res) => {
             if (res.authenticated) {
                 localStorage.token = res.token
+                localStorage.username = username
+                localStorage.password = password
                 if (res.manager) {
                     localStorage.manager = res.manager
                 }
@@ -90,6 +92,8 @@ function realLogin(username, password, cb) {
                 console.log("manager on the frontend ...")
                 return cb({
                     authenticated: true,
+                    username: username,
+                    password: password,
                     manager: true,
                     token: Math.random().toString(36).substring(7),
                 })

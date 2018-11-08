@@ -16,7 +16,7 @@ export default {
                 status: status == null ? 'Pending' : (status == 'APPROVED' ? 'Approved' : 'Rejected'),
                 amount: amount,
                 daysSinceRequest: diffDays(new Date(), new Date(dateSubmitted)),
-                dateHandled: dateHandled,
+                dateHandled: new Date(dateHandled),
                 description: description,
                 employee_id: employeeId,
                 team_id: teamId,

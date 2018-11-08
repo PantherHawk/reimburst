@@ -50,7 +50,9 @@ export default {
         return fetch(this.url.dev + _endpoint, {
             method: 'GET',
             headers: new Headers({
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'username': localStorage.username, 
+                'password': localStorage.password,
             }),
             mode: 'cors'
         })
@@ -63,7 +65,7 @@ export default {
         console.log("endpoint passed in as   ", _endpoint)
         return fetch(this.url.dev + _endpoint, {
             method: 'POST',
-            headers: { 'Content-type': 'application/json' },
+            headers: { 'Content-type': 'application/json', 'username': localStorage.username, 'password': localStorage.password },
             body: JSON.stringify(body),
             mode: 'cors' 
             })
