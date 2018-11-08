@@ -11,12 +11,12 @@
  * "employee_id":28,"team_id":4}
  */ -->
         <ul id="list-group">
-            <li v-on:click="toggleCard" v-for="exp in expenses" :key="exp.id" class="list-group-item d-flex justify-content-between align-items-center">
+            <li v-on:click="toggleCard(exp)" v-for="exp in expenses" :key="exp.id" class="list-group-item d-flex justify-content-between align-items-center">
                 {{ exp.title }} 
                 <span class="badge badge-primary badge-pill">${{ exp.amount }}</span>
                 <small> {{ exp.daysSinceRequest }} day{{ exp.daysSinceRequest > 1 ? 's' : '' }} ago </small>
                 <div
-                    v-bind:class="[ isActive ? 'show' : 'hide' ]"
+                    v-bind:class="[ exp.active ? 'show' : 'hide' ]"
                 >
                 <div class="d-flex w-100 justify-content-between">
                     {{ exp.status }}
@@ -82,9 +82,16 @@ export default {
                 })
             .catch(err => err)
         },
-        toggleCard() {
+        toggleCard(exp) {
             console.log("clicked to toggle card")
-            this.isActive = !this.isActive
+            console.log(exp)
+            exp.show = !!exp.show
+            exp.active = !exp.active
+            // NEW PLAN:
+            // on click, add to a list
+                // list[id] => element
+            // set the style of all members in the list to display
+            // click again, remove the element from the list
 
         }
     },

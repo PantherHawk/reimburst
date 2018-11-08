@@ -24,7 +24,8 @@ export default {
                 hasManager: hasManager && hasManager > 0 ? 'NOT_ADMIN' : 'ADMIN',
                 email: email,
                 info: info,
-                team_id: team_id
+                team_id: team_id,
+                active: false,
             }
         });
     },

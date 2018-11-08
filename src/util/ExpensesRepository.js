@@ -20,6 +20,7 @@ export default {
                 description: description,
                 employee_id: employeeId,
                 team_id: teamId,
+                active: false
             }
         })
     },
