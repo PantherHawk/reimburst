@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Employee;
@@ -97,7 +98,35 @@ public class ExpensesDelegate {
 					mapper.writeValue(res.getOutputStream(), jsonMap);
 				}
 			}
+		} else {
+			System.out.println("we're dealing with a non-manager employe...");
+//				post expense
+			ObjectMapper mapper = new ObjectMapper();
+//				Expense expense = mapper.readValue(req.getReader(), Expense.class);
+			TypeReference<HashMap<String, String>> typeRef = new TypeReference<HashMap<String, String>>() {};
+			Map<String, String> requestBodyMap = mapper.readValue(req.getReader(), typeRef);
+			System.out.println("body from expense add request    " + requestBodyMap);
+			Integer amount = Integer.parseInt(requestBodyMap.get("amount"));
+			String name = requestBodyMap.get("name");
+			String description = requestBodyMap.get("description");
+			Integer employeeId = employee.getId();
+			Integer teamId = employee.getTeam_id();
+			
+			System.out.println("Making expense bean with request body ....");
+			
+			Expense expense = new Expense(amount, name, description, employeeId, teamId);
+			
+			System.out.println("Adding new expense ....!");
+			boolean addExpenseSuccess = ExpenseService.getInstance().addExpense(expense);
+			if (addExpenseSuccess) {
+				System.out.println("New expense added!");
+				Map<String, Boolean> jsonMap = new HashMap<String, Boolean>();
+				jsonMap.put("success", addExpenseSuccess);
+				res.setHeader("Content-Type", "text/json");
+				mapper.writeValue(res.getOutputStream(), jsonMap);
+			}
 		}
-		
 	}
+	
 }
+
