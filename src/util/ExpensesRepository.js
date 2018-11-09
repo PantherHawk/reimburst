@@ -40,6 +40,9 @@ export default {
         return API.post(`/decision/decision?decision=${decision}`, {"id": id})
         .then(success => success)
         .catch(err => console.log('Err: ', err))
+    },
+    addExpense(expense) {
+        return API.post(`/expenses`, expense)
     }
 
 

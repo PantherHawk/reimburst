@@ -14,7 +14,7 @@ export default {
     		"404": "Login.html",
     		"500": "ServerError.html",
     	}
-    	console.log("response ----------->   " + JSON.stringify(_response))
+    	console.log("response ----------->   " + JSON.stringify(_response)['success'])
     	if (_response.status == "404") {
     		console.log("got a 404, redirecting to login.")
     		window.location.replace(status[_response.status]);
@@ -24,6 +24,9 @@ export default {
     		window.location.replace(status[_response.status]);
     		return;
     	} else if (JSON.stringify(_response)["success"]) {
+            console.log("success from post")
+            return _response
+        } else if (_response["success"]) {
             return _response
         }
         return _response.ok ? _response : Promise.reject(_response.statusText);
@@ -36,7 +39,7 @@ export default {
         const redirected = _response.redirected;
         console.log('content type:    ', contentType)
 //        console.log("response text: " + _response.text())
-        if (contentType && contentType.includes('application/json')) {
+        if (contentType && contentType.includes('json')) {
         	console.log('result: ' + _response);
             return _response.json();
         } else if (contentType.includes('text/html')) {

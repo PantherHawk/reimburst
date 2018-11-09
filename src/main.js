@@ -8,9 +8,13 @@ import About from './components/About'
 import Profile from './components/Profile'
 import Expenses from './components/Expenses'
 import ExpenseForm from './components/ExpenseForm'
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 import auth from './auth'
 import API from './util/API'
 
+Vue.use(BootstrapVue)
 Vue.use(VueRouter);
 
 // require authentication
