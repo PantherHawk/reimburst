@@ -16,7 +16,7 @@
                 {{ item.title }} - {{ item.id }} - {{ item.userId }}
             </li>
         </ul> -->
-        <expense-list v-bind:statusToggler="approveOrReject" v-bind:expenses="allExpenses">Expense List</expense-list>
+        <expense-list v-bind:statusToggler="approveOrReject" v-bind:expenses="filteredItems">Expense List</expense-list>
     </div>
 </template>
 <script>
@@ -49,9 +49,12 @@ export default {
     },
     computed: {
         filteredItems() {
+            if (!this.employeeSelected) {
+                return this.allExpenses
+            }
             console.log('employeeSelected  ', this.employeeSelected)
             return this.allExpenses.filter(exp => {
-                return exp.emp_id == this.employeeSelected;
+                return exp.employee_id == this.employeeSelected;
             })
         },
         employeeSelect() {
