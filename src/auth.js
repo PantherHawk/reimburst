@@ -32,7 +32,7 @@ export default {
     },
 
     logout(cb) {
-        delete localStorage.token
+        delete localStorage.clear()
         if (cb) cb()
         this.onChange(false)
     },

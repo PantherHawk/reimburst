@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2>Employee Expenses page!</h2>
-        <expenses-list></expenses-list>
+        <expenses-list v-bind:expenses="userExpenses"></expenses-list>
     </div>
 </template>
 <script>

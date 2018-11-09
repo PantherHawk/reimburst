@@ -98,7 +98,7 @@ export default {
             console.log("clicked to toggle card")
             console.log(exp)
             exp.show = !!exp.show
-            exp.active = !exp.active
+            exp.active = !exp.active 
             // NEW PLAN:
             // on click, add to a list
                 // list[id] => element
@@ -109,6 +109,7 @@ export default {
     },
     computed: {
         filteredItems() {
+            console.log('expenses array in filtered items functino of expenses list:  ', this.expenses)
             if (!this.status) {
                 return this.expenses
             }

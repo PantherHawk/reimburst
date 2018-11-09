@@ -26,7 +26,8 @@ export default {
     },
     // add uri later
     getForUser(user) {
-        return API.get(`/expenses`);
+        return API.get(`/expenses`)
+        .then(this._normalizeData);
     },
     // add uri later
     getAll() {
