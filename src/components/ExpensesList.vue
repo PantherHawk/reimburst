@@ -11,7 +11,7 @@
  * "employee_id":28,"team_id":4}
  */ -->
         <ul id="list-group">
-            <li v-on:click="toggleCard(exp)" v-for="exp in expenses" :key="exp.id" class="list-group-item d-flex justify-content-between align-items-center">
+            <li v-on:click="toggleCard(exp)" v-for="exp in filteredItems" :key="exp.id" class="list-group-item d-flex justify-content-between align-items-center">
             <button v-on:click.stop.prevent="statusToggler(exp, $event)">Approve</button>
             <button v-on:click.stop.prevent="statusToggler(exp, $event)">Reject</button>
                 {{ exp.title }} 
@@ -35,12 +35,12 @@
                 {{ item.name }} - {{ item.amount }} - {{ item.status }}
             </li>
         </ul> -->
-        <h3>Filtered List</h3>
+        <!-- <h3>Filtered List</h3>
         <ul>
             <li v-for="item of filteredItems" :key="item.id">
                 {{ item.name }} - {{ item.amount }} - {{ item.status }}
             </li>
-        </ul>
+        </ul> -->
         <input type="text" v-model="search">
         <input type="radio" id="Rejected" value="Rejected" v-model="status"><label for="Rejected">Rejected</label>
         <input type="radio" id="Approved" value="Approved" v-model="status"><label for="Approved">Approved</label>
@@ -56,20 +56,19 @@ export default {
     created: function() {
         console.log('created ExpensesList component!   ')
         console.log('this.expenses: ', this.expenses)
-        
 
         // this.getExpenses()
     },
     data() {
         return {
-            // expenses: this.expenses,
+            expenses: this.expenses,
             // expenses: expenseList,
             // expenses: [
             //     { name: "Uber", amount: "$200", status: "Pending", emp_id: "1", dateSubmitted: new Date('11-1-2018'), description: "traffic, cars, transportaion" },
             //     { name: "Prada", amount: "$500", status: "Approved", emp_id: "1", dateSubmitted: new Date('11-2-2018'), description: "shoes, shopping, luxury" },
             //     { name: "Grubhub", amount: "$1200", status: "Rejected", emp_id: "1", dateSubmitted: new Date('10-28-2018'), description: "food, lunch" },
             // ],
-            filteredExpenses: [],
+            filteredExpenses: this.expenses,
             filterText: '',
             status: '',
             search: '',
@@ -106,13 +105,16 @@ export default {
     },
     computed: {
         filteredItems() {
+            if (!this.status) {
+                return this.expenses
+            }
             return this.search.length < 1 ? 
             this.expenses.filter(exp => {
                 return exp.status == this.status
             })
             :
             this.expenses.filter(exp => {
-                return exp.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+                return exp.title.toLowerCase().indexOf(this.search.toLowerCase()) > -1
             }).concat(
                 this.expenses.filter(exp => {
                     return exp.description.toLowerCase().indexOf(this.search.toLowerCase()) > - 1
