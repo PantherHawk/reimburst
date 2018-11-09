@@ -12,8 +12,11 @@
  */ -->
         <ul id="list-group">
             <li v-on:click="toggleCard(exp)" v-for="exp in filteredItems" :key="exp.id" class="list-group-item d-flex justify-content-between align-items-center">
-            <button v-on:click.stop.prevent="statusToggler(exp, $event)">Approve</button>
-            <button v-on:click.stop.prevent="statusToggler(exp, $event)">Reject</button>
+            <div v-if="isManager">
+              <button v-on:click.stop.prevent="statusToggler(exp, $event)">Approve</button>
+              <button v-on:click.stop.prevent="statusToggler(exp, $event)">Reject</button>
+
+            </div>
                 {{ exp.title }} 
                 <span class="badge badge-primary badge-pill">${{ exp.amount }}</span>
                 <small> {{ exp.daysSinceRequest }} day{{ exp.daysSinceRequest > 1 ? 's' : '' }} ago </small>
@@ -75,7 +78,8 @@ export default {
             isActive: false,
             activeStyle: {
                 display: 'block',
-            }
+            },
+            isManager: localStorage.manager
         }
     },
     methods: {
