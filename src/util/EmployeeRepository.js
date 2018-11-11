@@ -51,6 +51,13 @@ export default {
             console.log("logged out!   ", logoutSuccess.status);
             return logoutSuccess;
         })
+    },
+    editProfile(body) {
+        return API.put(`/employee`, body)
+        .then(result => {
+            console.log("result of update employee profile request")
+            return result
+        })
     }
 
 }

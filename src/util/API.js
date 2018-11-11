@@ -59,7 +59,8 @@ export default {
                 'username': localStorage.username, 
                 'password': localStorage.password,
             }),
-            mode: 'cors'
+            mode: 'cors',
+            credentials: 'include'
         })
         .then(this._handleError)
         .then(this._handleContentType)
@@ -72,10 +73,25 @@ export default {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'username': localStorage.username, 'password': localStorage.password },
             body: JSON.stringify(body),
-            mode: 'cors' 
-            })
+            mode: 'cors',
+            credentials: 'include'
+        })
             .then(r => this._handleContentType(r))
             .then(l => this._handleError(l))
             .catch(error => { throw new Error(error) })
+    },
+    put(_endpoint, body) {
+        _endpoint = _endpoint ? _endpoint : '';
+        return fetch(this.url.dev + _endpoint, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'username': localStorage.username, 'password': localStorage.password },
+            body: JSON.stringify(body),
+            mode: 'cors',
+            credentials: 'include'
+        })
+        .then(this._handleError)
+        .then(this._handleContentType)
+        .catch(error => { throw new Error(error) })
+    
     }
 }

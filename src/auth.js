@@ -86,6 +86,8 @@ function realLogin(username, password, cb) {
     .then(json => JSON.stringify(json))
     .then(user => {
         console.log('user id', JSON.parse(user).id)
+
+        localStorage.user = user
         if (JSON.parse(user).id > 0) {
             console.log("user on the frontend")
             if (JSON.parse(user).hasManager < 1) {

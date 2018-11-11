@@ -8,6 +8,7 @@ import About from './components/About'
 import Profile from './components/Profile'
 import Expenses from './components/Expenses'
 import ExpenseForm from './components/ExpenseForm'
+import EditProfileForm from './components/EditProfileForm'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -40,6 +41,17 @@ function requireManagerAuth(to, from, next) {
   }
 }
 
+function requireEmployeeAuth(to, from , next) {
+  if (auth.manager() || !auth.loggedIn()) {
+    next({
+      path: '/login',
+      query: { redirect: to.fullPath }
+    })
+  } else {
+    next()
+  }
+}
+
 const router = new VueRouter({
   mode: 'history',
   base: __dirname,
@@ -47,8 +59,9 @@ const router = new VueRouter({
     { path: '/login', component: Login},
     { path: '/about', component: About },
     { path: '/manager', component: Manager, beforeEnter: requireManagerAuth },
-    { path: '/employee', component: Employee, beforeEnter: requireAuth, children: [
+    { path: '/employee', component: Employee, beforeEnter: requireEmployeeAuth, children: [
       { path: '/profile', component: Profile },
+      { path: '/edit', component: EditProfileForm },
       { path: '/expenses', component: Expenses },
       { path: '/new-expense', component: ExpenseForm }
     ] },

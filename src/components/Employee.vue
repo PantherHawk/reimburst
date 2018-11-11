@@ -4,6 +4,7 @@
             <ul>
                 <li><router-link to="/expenses">Expenses</router-link></li>
                 <li><router-link to="/profile">Profile</router-link></li>
+                <li><router-link to="/edit">Edit Profile</router-link></li>
                 <li>
                     <router-link to="/new-expense">New Expense</router-link>
                 </li>
