@@ -6,6 +6,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
+
 public class WebUtils {
 
 	public static Map<String, String> getHeadersInfo(HttpServletRequest req) {
@@ -20,4 +23,6 @@ public class WebUtils {
 		}
 		return map;
 	}
+	
+	public static JedisPool pool = new JedisPool(new JedisPoolConfig(), "localhost");
 }

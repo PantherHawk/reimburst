@@ -31,23 +31,29 @@ public class RequestHelper {
 //		get the employee's info for home, first fifty expenses: .../api/employee/
 		switch(switchString) {
 		case "decision": dd.handleDecision(req, res); break;
-		case "expenses": if ("GET".equals(req.getMethod())) {
+		case "expenses": 
+			if ("GET".equals(req.getMethod())) {
 			exd.getExpenses(req, res);
-		} else {
-			exd.postExpenses(req, res);
-		}
-		case "employee": if ("GET".equals(req.getMethod())) {
-			ed.getAllEmployees(req, res);
-		}; break;
+			} else {
+				exd.postExpenses(req, res);
+			} break;
+		case "employee": 
+			if ("GET".equals(req.getMethod())) {
+				ed.getAllEmployees(req, res);
+			} else if ("PUT".equals(req.getMethod())) {
+				ed.editEmployeeInfo(req, res);
+			}
+			break;
 		case "manager": /*TODO: serve the Manager assets*/; break;
-		case "login": if ("POST".equals(req.getMethod())) {
+		case "login": 
+			if ("POST".equals(req.getMethod())) {
 			ld.login(req, res); break;
 			/*TODO: handle login*/
-		} else {
+			} else {
 			System.out.println("Sending to login delegate for redirect.");
 			ld.getPage(req, res);
 			/*TODO: serve the login page*/
-		} break;
+			} break;
 		case "logout": ld.logout(req, res); break;
 		default: break;
 		}

@@ -2,13 +2,13 @@ package delegate;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -47,5 +47,36 @@ public class EmployeeDelegate {
 		ObjectMapper unmarshalling = new ObjectMapper();
 		res.setHeader("Content-Type", "application/json");
 		unmarshalling.writeValue(res.getOutputStream(), allEmployees);
+	}
+	
+	public void editEmployeeInfo(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
+		System.out.println("Jsession id ?   " + req.getParameter("JSESSIONID"));
+		Map<String, String> headers = WebUtils.getHeadersInfo(req);
+		System.out.println("Request headers    --------  " + headers);
+		String username = headers.get("username");
+		String password = headers.get("password");
+//		read the post body, make an employee bean
+		Employee employee = new ObjectMapper().readValue(req.getReader(	), Employee.class);
+//		update employee info
+		ObjectMapper mapper = new ObjectMapper();
+		Employee updateSuccess = EmployeeService.getInstance().editEmployee(employee);
+		if (updateSuccess != null) {
+			System.out.println("update succes    " + updateSuccess);
+			res.setHeader("Content-Type", "application/json");
+			setAccessControlHeaders(res);
+			mapper.writeValue(res.getOutputStream(), updateSuccess);
+		} else {
+			System.out.println("update failed...");
+			Map<String, String> json = new HashMap<String, String>();
+			json.put("message", "FAILED TO UPDATE USER INFO");
+			res.setContentType("applicaiton/json");
+			mapper.writeValue(res.getOutputStream(), json);
+		}
+	}
+	
+	private void setAccessControlHeaders(HttpServletResponse resp) {
+	      resp.setHeader("Access-Control-Allow-Origin", "http://localhost:8082");
+	      resp.setHeader("Access-Control-Allow-Methods", "POST");
 	}
 }

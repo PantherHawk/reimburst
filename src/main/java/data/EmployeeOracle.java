@@ -126,17 +126,18 @@ public class EmployeeOracle implements EmployeeDao {
 	public Employee updateEmployee(Employee employee) {
 		int statementIndex = 0;
 		try (Connection conn = ConnectionUtil.getConnection()) {
-			String sql = "UPDATE EMPLOYEES SET FIRSTNAME = ?, LASTNAME = ?, USERNAME = ?, PASS = ?, HAS_MANAGER = ?, EMAIL = ?, INFO = ? WHERE ID = ?";
+			String sql = "UPDATE EMPLOYEES SET FIRSTNAME = ?, LASTNAME = ?, USERNAME = ?, EMAIL = ?, INFO = ? WHERE ID = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			
 			stmt.setString(++statementIndex, employee.getFirstName());
 			stmt.setString(++statementIndex, employee.getLastName());
 			stmt.setString(++statementIndex, employee.getUsername());
-			stmt.setString(++statementIndex, employee.getPassword());
+//			stmt.setString(++statementIndex, employee.getPassword());
 			stmt.setString(++statementIndex, employee.getEmail());
 			stmt.setString(++statementIndex, employee.getInfo());
 			stmt.setInt(++statementIndex, employee.getId());
 			int i = stmt.executeUpdate();
+			System.out.println("what's result of update employee?     " + i);
 			if (i == 0) {
 				logger.info("Updated employee");
 				return employee;

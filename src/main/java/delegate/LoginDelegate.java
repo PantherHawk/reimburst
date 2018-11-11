@@ -15,6 +15,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Employee;
 import data.EmployeeService;
+import redis.clients.jedis.Jedis;
+import util.WebUtils;
 
 public class LoginDelegate {
 	
@@ -30,8 +32,10 @@ public class LoginDelegate {
 //        res.setHeader("Access-Control-Allow-Headers", "X-PINGOTHER,Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization");
 //        res.addHeader("Access-Control-Expose-Headers", "xsrf-token");
         
-		
+		Jedis jedis = null;
 		try {
+//			jedis = WebUtils.pool.getResource();
+			
 			authEmployee = new ObjectMapper().readValue(req.getReader(	), Employee.class);
 			System.out.println("employee object: " + authEmployee);
 			
@@ -49,6 +53,8 @@ public class LoginDelegate {
 				res.addCookie(message);
 //				Throw the user object into the session
 				session.setAttribute("user", login);
+//				Redis session
+//				jedis.getSet("user", authEmployee);
 				System.out.println("session:   " + session);
 //				If she's not a manager
 				if (login.getHasManager() > 0) {
@@ -84,7 +90,11 @@ public class LoginDelegate {
 			   }
 
 			}
-		} catch(JsonParseException | JsonMappingException e) {
+		} catch(JsonParseException e) {
+			e.printStackTrace();
+			RequestDispatcher dispatch = req.getRequestDispatcher("/html/Error.html");
+			dispatch.include(req, res);
+		} catch(JsonMappingException e) {
 			e.printStackTrace();
 			RequestDispatcher dispatch = req.getRequestDispatcher("/html/Error.html");
 			dispatch.include(req, res);
@@ -92,6 +102,10 @@ public class LoginDelegate {
 			e.printStackTrace();
 			RequestDispatcher dispatch = req.getRequestDispatcher("/html/ServerError.html");
 			dispatch.include(req, res);
+		} finally {
+			if (jedis != null) {
+				jedis.close();
+			}
 		}
 	}
 	
