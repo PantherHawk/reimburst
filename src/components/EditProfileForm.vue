@@ -1,4 +1,5 @@
 <template>
+<div>
     <form action="" @submit.prevent="handleSubmit($event)">
         <label for="edit-firstname">First Name:</label>
         <input v-model="firstName" placeholder="firstName" id="editFirstname" type="text" >
@@ -12,6 +13,8 @@
         <input v-model="info" placeholder="info" id="editInfo" type="text">
         <button type="submit" id="submitEditProfile">Save</button>
     </form>
+    <a @click="$router.go(-1)">Back</a>
+</div>
 </template>
 
 <script>
