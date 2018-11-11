@@ -14,7 +14,7 @@ export default {
     		"404": "Login.html",
     		"500": "ServerError.html",
     	}
-    	console.log("response ----------->   " + JSON.stringify(_response)['success'])
+    	console.log("response ----------->   " + JSON.stringify(_response))
     	if (_response.status == "404") {
     		console.log("got a 404, redirecting to login.")
     		window.location.replace(status[_response.status]);

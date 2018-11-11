@@ -9,11 +9,25 @@ export default {
         console.log('expenses: ', expenses)
         
         return expenses.map(expense => {
-            const { id, name, status, amount, dateHandled, dateSubmitted, description, employeeId, teamId } = expense;
+            const { id, 
+                name, 
+                status, 
+                amount, 
+                dateHandled, 
+                dateSubmitted, 
+                description, 
+                employeeId, 
+                teamId,
+                managerEmail,
+                managerFirstName,
+                managerLastName,
+            } = expense;
             return {
                 id: id,
                 title: name,
                 status: status == null ? 'Pending' : (status === "approve" ? 'Approved' : 'Rejected'),
+                managerName: `${managerFirstName} ${managerLastName}`,
+                managerEmail: managerEmail,
                 amount: amount,
                 daysSinceRequest: diffDays(new Date(), new Date(dateSubmitted)),
                 dateHandled: new Date(dateHandled),

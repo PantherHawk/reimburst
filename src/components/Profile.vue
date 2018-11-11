@@ -9,6 +9,7 @@
       <p>{{ email }}</p>
       <p>{{username}}</p>
     </div>
+    <button type="button"><router-link to="/edit">Edit Profile</router-link></button>
   </div>
 </template>
 

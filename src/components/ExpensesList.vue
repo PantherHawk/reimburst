@@ -24,7 +24,13 @@
                     v-bind:class="[ exp.active ? 'show' : 'hide' ]"
                 >
                 <div class="d-flex w-100 justify-content-between">
-                    {{ exp.status }}
+                    <span>
+                        {{ exp.managerName }}
+                    </span>
+                    <span>--></span>
+                    <span>
+                        {{ exp.status }}
+                    </span>
                 </div>
                 <p>
                     {{ exp.description }}
