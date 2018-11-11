@@ -65,7 +65,7 @@ export default {
             }
             const body = {
                 id: id,
-                firstName: firstName.valueOf === this.firstName ? firstName : this.firstName,
+                firstName: firstName.valueOf === this.firstName ? firstNloame : this.firstName,
                 lastName: lastName.valueOf === this.lastName ? lastName : this.lastName, 
                 username: username.valueOf === this.username ? username : this.username,
                 email: email.valueOf === this.email ? email : this.email,
@@ -76,6 +76,15 @@ export default {
             console.log('firing off put request with  ' + body)
 
             EmployeeRepository.editProfile(body)
+            .then(res => {
+                localStorage.user = {
+                    username,
+                    email,
+                    info,
+                    firstName,
+                    lastName,
+                }
+            })
 
         }
     }
